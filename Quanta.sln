@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guacamole.WebApi", "Guacamole.WebApi\Guacamole.WebApi.csproj", "{FFABF825-6C82-4938-AA38-EFBB5924E6C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quanta.WebApi", "Quanta.WebApi\Quanta.WebApi.csproj", "{FFABF825-6C82-4938-AA38-EFBB5924E6C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guacamole.Client", "Guacamole.Client\Guacamole.Client.csproj", "{96A0793A-27FD-43FD-ACFC-19ED4FBCF654}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guacamole.DataAccess", "Guacamole.DataAccess\Guacamole.DataAccess.csproj", "{1007ADB0-605B-4382-9BFE-095EBADBE648}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quanta.DataAccess", "Quanta.DataAccess\Quanta.DataAccess.csproj", "{1007ADB0-605B-4382-9BFE-095EBADBE648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guacamole.Domain", "Guacamole.Domain\Guacamole.Domain.csproj", "{5DC2F3BB-5AE9-4A45-A2DD-278322875D77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quanta.Domain", "Quanta.Domain\Quanta.Domain.csproj", "{5DC2F3BB-5AE9-4A45-A2DD-278322875D77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
