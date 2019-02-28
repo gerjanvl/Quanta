@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guacamole.WebSocket", "Guacamole.WebSocket\Guacamole.WebSocket.csproj", "{FFABF825-6C82-4938-AA38-EFBB5924E6C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guacamole.Client", "Guacamole.Client\Guacamole.Client.csproj", "{96A0793A-27FD-43FD-ACFC-19ED4FBCF654}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guacamole.Data", "Guacamole.Data\Guacamole.Data.csproj", "{1007ADB0-605B-4382-9BFE-095EBADBE648}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guacamole.Domain", "Guacamole.Domain\Guacamole.Domain.csproj", "{5DC2F3BB-5AE9-4A45-A2DD-278322875D77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFABF825-6C82-4938-AA38-EFBB5924E6C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFABF825-6C82-4938-AA38-EFBB5924E6C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFABF825-6C82-4938-AA38-EFBB5924E6C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFABF825-6C82-4938-AA38-EFBB5924E6C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A0793A-27FD-43FD-ACFC-19ED4FBCF654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A0793A-27FD-43FD-ACFC-19ED4FBCF654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A0793A-27FD-43FD-ACFC-19ED4FBCF654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A0793A-27FD-43FD-ACFC-19ED4FBCF654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1007ADB0-605B-4382-9BFE-095EBADBE648}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1007ADB0-605B-4382-9BFE-095EBADBE648}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1007ADB0-605B-4382-9BFE-095EBADBE648}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1007ADB0-605B-4382-9BFE-095EBADBE648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DC2F3BB-5AE9-4A45-A2DD-278322875D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DC2F3BB-5AE9-4A45-A2DD-278322875D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DC2F3BB-5AE9-4A45-A2DD-278322875D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DC2F3BB-5AE9-4A45-A2DD-278322875D77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35FA6E18-C083-4313-9B9C-9394C0D17054}
+	EndGlobalSection
+EndGlobal
