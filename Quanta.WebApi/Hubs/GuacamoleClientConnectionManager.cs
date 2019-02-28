@@ -37,14 +37,11 @@ namespace Quanta.WebApi.Hubs
         {
             var guacamoleClient = new GuacamoleClient(_guacamoleServerAddress);
 
-            var client = _hubContext.Clients.Client(hubConnectionId);
-
-            var connectionId = await guacamoleClient.Connect(
-                protocol: protocol,
-                args: args);
+            var connectionId = await guacamoleClient.Connect(protocol, args);
 
             _clientManager.Add(hubConnectionId, guacamoleClient);
 
+            var client = _hubContext.Clients.Client(hubConnectionId);
             await client.SendCoreAsync("connected", new object[] { connectionId });
 
 #pragma warning disable 4014
@@ -61,17 +58,22 @@ namespace Quanta.WebApi.Hubs
         {
             var guacamoleClient = _clientManager.Get(hubConnectionId);
 
+            var blockedInstructions = new List<string>()
+            {
+                "disconnect" , "select", "connect"
+            };
+
             try
             {
                 var client = _hubContext.Clients.Client(hubConnectionId);
 
                 while (guacamoleClient.Connected)
                 {
-                    var instruction = await guacamoleClient.ReadInstruction().TimeoutAfter(TimeSpan.FromMinutes(1));
+                    var instruction = await guacamoleClient.ReadInstruction().ThrowTimeoutAfter(TimeSpan.FromMinutes(1));
 
-                    if (instruction.OpCode.ToLower().Trim() == "disconnect") break;
-                    if (instruction.OpCode.ToLower().Trim() == "select") break;
-                    if (instruction.OpCode.ToLower().Trim() == "connect") break;
+                    var instructionOpCode = instruction.OpCode.ToLower().Trim();
+
+                    if (blockedInstructions.Contains(instructionOpCode)) break;
 
                     await client.SendAsync("instruction", instruction);
                 }

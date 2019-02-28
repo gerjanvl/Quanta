@@ -8,7 +8,7 @@ namespace Guacamole.Client.Common
 {
     public static class TaskExtensions
     {
-        public static async Task<TResult> TimeoutAfter<TResult>(this Task<TResult> task, TimeSpan timeout)
+        public static async Task<TResult> ThrowTimeoutAfter<TResult>(this Task<TResult> task, TimeSpan timeout)
         {
             using (var timeoutCancellationTokenSource = new CancellationTokenSource())
             {

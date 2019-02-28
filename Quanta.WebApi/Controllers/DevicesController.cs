@@ -46,7 +46,6 @@ namespace Quanta.WebApi.Controllers
             return Ok(device);
         }
 
-
         [HttpPost]
         [ODataRoute]
         [Produces("application/json")]

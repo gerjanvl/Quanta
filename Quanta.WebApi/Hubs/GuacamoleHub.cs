@@ -39,6 +39,7 @@ namespace Quanta.WebApi.Hubs
                 if (!string.IsNullOrWhiteSpace(deviceConnectionString))
                 {
                     var deviceConfiguration = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(deviceConnectionString);
+
                     await _clientConnectionManager.CreateNew(
                         Context.ConnectionId,
                         protocol: deviceConfiguration["protocol"],
@@ -50,6 +51,7 @@ namespace Quanta.WebApi.Hubs
             catch (Exception)
             {
                 Context.Abort();
+
                 throw;
             }
         }
@@ -66,6 +68,7 @@ namespace Quanta.WebApi.Hubs
             catch (Exception)
             {
                 Context.Abort();
+
                 throw;
             }
         }
