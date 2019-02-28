@@ -52,7 +52,7 @@ namespace Guacamole.WebSocket
         {
             services.AddCors(o => o.AddPolicy("DefaultPolicy", builder =>
             {
-                builder.AllowAnyOrigin()
+                builder.WithOrigins("https://localhost:4200")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials();
@@ -110,6 +110,8 @@ namespace Guacamole.WebSocket
             services.AddApiVersioning(options => options.ReportApiVersions = true);
             services.AddOData().EnableApiVersioning();
 
+            services.AddResponseCompression();
+
             services.AddSwaggerGen();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -134,6 +136,8 @@ namespace Guacamole.WebSocket
                 routeBuilder.Count().Filter().OrderBy().Expand().Select().MaxTop(100);
                 routeBuilder.MapVersionedODataRoutes("odata-bypath", "api/v{version:apiVersion}", modelBuilder.GetEdmModels());
             });
+
+            app.UseResponseCompression();
 
             app.UseSwagger();
             app.UseSwaggerUI(options =>

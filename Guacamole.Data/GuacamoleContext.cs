@@ -20,7 +20,9 @@ namespace Guacamole.Data
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId);
 
-            modelBuilder.Entity<Device>();
+            modelBuilder.Entity<Device>()
+                .Property(o => o.Enabled)
+                .HasDefaultValue(true);
 
             modelBuilder.Entity<UserDevice>()
                 .HasOne(o => o.Device);
