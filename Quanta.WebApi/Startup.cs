@@ -17,6 +17,7 @@ using Newtonsoft.Json.Serialization;
 using Quanta.DataAccess;
 using Quanta.Domain.Services;
 using Quanta.WebApi.Extensions;
+using Quanta.WebApi.Extensions.Authentication.ActiveDirectory;
 using Quanta.WebApi.Hubs;
 using Quanta.WebApi.MappingProfiles;
 using Quanta.WebApi.Swagger;
@@ -43,42 +44,14 @@ namespace Quanta.WebApi
                     .AllowCredentials();
             }));
 
-            services
-                .AddAuthentication(o =>
-                {
-                    o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(o =>
-                {
-                    o.Authority = Configuration["AzureAd:Authority"];
-                    o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                    {
-                        ValidAudiences = new List<string>
-                        {
-                            Configuration["AzureAd:ClientId"]
-                        }
-                    };
-                    o.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            var accessToken = context.Request.Query["access_token"];
-
-                            if (!string.IsNullOrEmpty(accessToken))
-                            {
-                                context.Token = accessToken;
-                            }
-                            return Task.CompletedTask;
-                        }
-                    };
-                });
+            services.AddActiveDirectoryAuthentication(Configuration.GetValue<ActiveDirectoryAuthenticationOptions>("AzureAd"));
 
             services.AddSignalR().AddJsonProtocol(options =>
             {
                 options.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
-            services.AddDbContext<GuacamoleContext>(o => o.UseSqlServer(Configuration.GetConnectionString("GuacamoleDatabase")));
+            services.AddDbContext<GuacamoleContext>(o => o.UseSqlServer(Configuration.GetConnectionString("QuantaDatabase")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserService, UserService>();

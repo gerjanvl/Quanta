@@ -6,11 +6,13 @@ namespace Quanta.WebApi.Extensions
 {
     public static class StaticAutoMapperExtension
     {
-        public static void AddAutoMapperStatic(this IServiceCollection services, Action<IMapperConfigurationExpression> configure)
+        public static IServiceCollection AddAutoMapperStatic(this IServiceCollection services, Action<IMapperConfigurationExpression> configure)
         {
             Mapper.Initialize(configure);
 
             services.AddAutoMapper();
+
+            return services;
         }
     }
 }
