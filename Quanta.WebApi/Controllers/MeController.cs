@@ -43,5 +43,17 @@ namespace Quanta.WebApi.Controllers
 
             return Ok(devices);
         }
+
+        [ODataRoute("recentDevices")]
+        public IActionResult GetRecentDevices()
+        {
+            var user = _userService.GetByAdIdentifier<User>(User.GetUserAdId());
+
+            if (user == null) return Unauthorized();
+
+            var devices = _userService.GetRecentDevices<Device>(user.Id);
+
+            return Ok(devices);
+        }
     }
 }

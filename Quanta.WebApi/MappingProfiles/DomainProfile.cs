@@ -15,7 +15,8 @@ namespace Quanta.WebApi.MappingProfiles
         private void CreateUserMappings()
         {
             CreateMap<DataAccess.Models.User, OData.Models.User>()
-                .ForMember(o => o.Devices, o => o.MapFrom(p => p.UserDevices.Select(ud => ud.Device)));
+                .ForMember(o => o.Devices, o => o.Ignore())
+                .ForMember(o => o.RecentDevices, o => o.Ignore());
 
             CreateMap<OData.Models.User, DataAccess.Models.User>()
                 .ForMember(o => o.UserDevices, p => p.Ignore());

@@ -21,6 +21,8 @@ namespace Quanta.Domain.Services
 
         IQueryable<TDevice> GetDevices<TDevice>(int userId);
 
+        IQueryable<TDevice> GetRecentDevices<TDevice>(int userId);
+
         string GetUserDeviceConnectionString(int userId, int deviceId);
 
         void RemoveDevice(int userId, int deviceId);

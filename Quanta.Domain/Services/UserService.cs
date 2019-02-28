@@ -116,7 +116,26 @@ namespace Quanta.Domain.Services
 
         public string GetUserDeviceConnectionString(int userId, int deviceId)
         {
-           return _userDeviceRepository.All().Where(o => o.DeviceId == deviceId & o.UserId == userId).Select(o => o.Device.ConnectionString).FirstOrDefault();
+           return _userDeviceRepository.All()
+               .Where(o => o.DeviceId == deviceId & o.UserId == userId)
+               .Select(o => o.Device.ConnectionString)
+               .FirstOrDefault();
+        }
+
+        public IQueryable<TDevice> GetRecentDevices<TDevice>(int userId)
+        {
+            var sampleDate = DateTime.Now.AddDays(-7).Date;
+
+            return _userRepository.All()
+                .Include(o => o.DeviceAccess)
+                .Where(o => o.Id == userId)
+                .SelectMany(o => o.UserDevices.Select(d => d.Device))
+                .SelectMany(o => o.DeviceAccess)
+                .Where(o => o.UserId == userId &&  o.AccessedOn >= sampleDate)
+                .OrderByDescending(o => o.AccessedOn)
+                .GroupBy(o => o.Device)
+                .Select(o => o.Key)
+                .ProjectTo<TDevice>();
         }
 
         public void AddDevice(int userId, int deviceId)

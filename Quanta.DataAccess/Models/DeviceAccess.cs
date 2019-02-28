@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Quanta.DataAccess.Models
 {
-    public class UserDevice
+    public class DeviceAccess
     {
         public int Id { get; set; }
 
@@ -13,5 +15,7 @@ namespace Quanta.DataAccess.Models
         public int DeviceId { get; set; }
 
         public Device Device { get; set; }
+
+        public DateTime AccessedOn { get; set; }
     }
 }
