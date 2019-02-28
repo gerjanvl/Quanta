@@ -33,11 +33,11 @@ namespace Quanta.WebApi.Hubs
             return new IPEndPoint(ipAddress.First(), port);
         }
 
-        public async Task CreateNew(string hubConnectionId, string protocol, Dictionary<string, object> args)
+        public async Task CreateNew(string hubConnectionId, string protocol, int width, int height, Dictionary<string, object> args)
         {
             var guacamoleClient = new GuacamoleClient(_guacamoleServerAddress);
 
-            var connectionId = await guacamoleClient.Connect(protocol, args);
+            var connectionId = await guacamoleClient.Connect(protocol, width, height, args);
 
             _clientManager.Add(hubConnectionId, guacamoleClient);
 

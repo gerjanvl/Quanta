@@ -18,18 +18,15 @@ namespace Guacamole.Client
 
         public GuacamoleClient Get(string connectionId)
         {
-            if (GuacamoleClients.TryGetValue(connectionId, out var guacamoleClient)) return guacamoleClient;
-
-            return null;
+            return GuacamoleClients.TryGetValue(connectionId, out var guacamoleClient) ? guacamoleClient : null;
         }
 
         public void Remove(string connectionId)
         {
-            if (GuacamoleClients.TryRemove(connectionId, out var client))
-            {
-                client.Disconnect();
-                client.Dispose();
-            }
+            if (!GuacamoleClients.TryRemove(connectionId, out var client)) return;
+
+            client.Disconnect();
+            client.Dispose();
         }
     }
 }

@@ -27,53 +27,37 @@ namespace Guacamole.Client
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
-        public async Task<string> Connect(string protocol, Dictionary<string, object> args)
+        public async Task<string> Connect(string protocol, int width, int height, Dictionary<string, object> arguments)
         {
             await _client.ConnectAsync(_endPoint.Address, _endPoint.Port);
 
             _stream = _client.GetStream();
-
             _charReader = new CharReader(_stream);
             _charWriter = new CharWriter(_stream);
 
             await WriteInstruction("select", protocol);
 
             var argsInstruction = await ReadInstruction();
-            var possibleArgs = argsInstruction.Args.ToList();
 
-            var connectionArguments = new object[possibleArgs.Count];
+            var defaultArguments = argsInstruction.Args.ToList();
 
-            foreach (var keyValuePair in args)
-            {
-                var index = possibleArgs.IndexOf(keyValuePair.Key);
+            var connectionArguments = OverrideDefaultValues(arguments, defaultArguments);
 
-                if (index == -1) continue;
-
-                if (keyValuePair.Value is bool)
-                {
-                    connectionArguments[index] = keyValuePair.Value.ToString().ToLower();
-                }
-                else
-                {
-                    connectionArguments[index] = keyValuePair.Value;
-                }
-            }
-
-            await WriteInstruction("size", 1024, 768, 96);
+            await WriteInstruction("size", width, height, 96);
             await WriteInstruction("audio", "audio/ogg");
             await WriteInstruction("video");
             await WriteInstruction("image");
 
             await WriteInstruction("connect", connectionArguments);
 
-            var ready = await ReadInstruction();
+            var readyInstruction = await ReadInstruction();
 
-            return ready.Args.ToArray()[0];
+            return readyInstruction.Args.ToArray()[0];
         }
 
         public Task<GuacamoleInstruction> ReadInstruction()
         {
-            return ReadInstruction(cancellationToken: _cancellationTokenSource.Token);
+            return ReadInstruction(_cancellationTokenSource.Token);
         }
 
         public async Task<GuacamoleInstruction> ReadInstruction(CancellationToken cancellationToken)
@@ -140,6 +124,29 @@ namespace Guacamole.Client
         public void Disconnect()
         {
             _cancellationTokenSource.Cancel();
+        }
+
+        private object[] OverrideDefaultValues(Dictionary<string, object> values, List<string> defaultValues)
+        {
+            var resultValues = new object[defaultValues.Count];
+
+            foreach (var keyValuePair in values)
+            {
+                var index = defaultValues.IndexOf(keyValuePair.Key);
+
+                if (index == -1) continue;
+
+                if (keyValuePair.Value is bool)
+                {
+                    resultValues[index] = keyValuePair.Value.ToString().ToLower();
+                }
+                else
+                {
+                    resultValues[index] = keyValuePair.Value;
+                }
+            }
+
+            return resultValues;
         }
 
         public void Dispose()

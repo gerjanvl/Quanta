@@ -43,6 +43,8 @@ namespace Quanta.WebApi.Hubs
                     await _clientConnectionManager.CreateNew(
                         Context.ConnectionId,
                         protocol: deviceConfiguration["protocol"],
+                        width: connectViewModel.Width,
+                        height: connectViewModel.Height,
                         args: deviceConfiguration
                     );
                 }
