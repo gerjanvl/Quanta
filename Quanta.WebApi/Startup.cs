@@ -18,6 +18,7 @@ using Quanta.DataAccess;
 using Quanta.Domain.Services;
 using Quanta.WebApi.Extensions;
 using Quanta.WebApi.Extensions.Authentication.ActiveDirectory;
+using Quanta.WebApi.Extensions.AutoMapper;
 using Quanta.WebApi.Hubs;
 using Quanta.WebApi.MappingProfiles;
 using Quanta.WebApi.Swagger;
@@ -36,22 +37,7 @@ namespace Quanta.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy("DefaultPolicy", builder =>
-            {
-                builder.WithOrigins("https://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
-            }));
-
-            services.AddActiveDirectoryAuthentication(Configuration.GetValue<ActiveDirectoryAuthenticationOptions>("AzureAd"));
-
-            services.AddSignalR().AddJsonProtocol(options =>
-            {
-                options.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
-
-            services.AddDbContext<GuacamoleContext>(o => o.UseSqlServer(Configuration.GetConnectionString("QuantaDatabase")));
+            services.AddDbContext<GuacamoleContext>(c => c.UseSqlServer(Configuration.GetConnectionString("QuantaDatabase")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserService, UserService>();
@@ -64,15 +50,30 @@ namespace Quanta.WebApi
 
             services.AddAutoMapperStatic(o => o.AddProfile<DomainProfile>());
 
-            services.AddODataApiExplorer(options => { options.AssumeDefaultVersionWhenUnspecified = true; });
+            services.AddCors(c => c.AddPolicy("DefaultPolicy", builder =>
+            {
+                builder.WithOrigins("https://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            }));
+
+            services.AddActiveDirectoryAuthentication(Configuration.GetSection("AzureAd").Get<ActiveDirectoryAuthenticationOptions>());
+
+            services.AddSignalR().AddJsonProtocol(options =>
+            {
+                options.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
+            services.AddODataApiExplorer(options => options.AssumeDefaultVersionWhenUnspecified = true);
             services.AddApiVersioning(options => options.ReportApiVersions = true);
             services.AddOData().EnableApiVersioning();
-
-            services.AddResponseCompression();
 
             services.AddSwaggerGen();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddResponseCompression();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)

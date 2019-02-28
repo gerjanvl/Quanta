@@ -3,6 +3,7 @@ using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Quanta.Domain.Services;
+using Quanta.WebApi.Extensions.OData;
 using Quanta.WebApi.OData;
 using Quanta.WebApi.OData.Models;
 

@@ -2,7 +2,7 @@
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Quanta.WebApi.Extensions
+namespace Quanta.WebApi.Extensions.AutoMapper
 {
     public static class StaticAutoMapperExtension
     {

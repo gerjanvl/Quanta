@@ -1,4 +1,4 @@
-﻿namespace Quanta.WebApi.Extensions
+﻿namespace Quanta.WebApi.Extensions.Authentication.ActiveDirectory
 {
     public class ActiveDirectoryAuthenticationOptions
     {

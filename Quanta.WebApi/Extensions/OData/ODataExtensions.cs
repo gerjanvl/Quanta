@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.OData.UriParser;
 using Newtonsoft.Json.Linq;
 
-namespace Quanta.WebApi.OData
+namespace Quanta.WebApi.Extensions.OData
 {
     public static class ODataExtensions
     {
