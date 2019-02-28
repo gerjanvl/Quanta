@@ -39,7 +39,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Guacamole.WebSocket
 {
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -49,8 +48,6 @@ namespace Guacamole.WebSocket
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(o => o.AddPolicy("DefaultPolicy", builder =>
@@ -113,14 +110,11 @@ namespace Guacamole.WebSocket
             services.AddApiVersioning(options => options.ReportApiVersions = true);
             services.AddOData().EnableApiVersioning();
 
-            services.AddSpaStaticFiles(o => o.RootPath = "wwwroot");
-
             services.AddSwaggerGen();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())

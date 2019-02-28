@@ -83,7 +83,7 @@ namespace Guacamole.WebSocket.Controllers
                 return NotFound();
             }
 
-            // User can access his own devices
+            // User can access his/her own devices
             if (User.IsInRole("User"))
             {
                 var currentUserAdId = User.GetUserAdId();

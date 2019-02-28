@@ -11,17 +11,16 @@ namespace Guacamole.WebSocket.OData.Configuration
 
         private EntityTypeConfiguration ConfigureCurrent(ODataModelBuilder builder)
         {
-            var userConfig = builder.AddEntityType(typeof(User));
+            var userConfiguration = builder.AddEntityType(typeof(User));
 
-            builder.AddEntitySet("Users", userConfig);
-            builder.AddSingleton("Me", userConfig);
+            builder.AddEntitySet("Users", userConfiguration);
+            builder.AddSingleton("Me", userConfiguration);
 
-            return userConfig;
+            return userConfiguration;
         }
 
         public void Apply(ODataModelBuilder builder, ApiVersion apiVersion)
         {
-            // note: the EDM for orders is only available in version 1.0
             if (apiVersion == V1)
             {
                 ConfigureCurrent(builder);

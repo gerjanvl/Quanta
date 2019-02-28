@@ -27,7 +27,6 @@ namespace Guacamole.Client
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
-
         public async Task<string> Connect(string protocol, Dictionary<string, object> args)
         {
             await _client.ConnectAsync(_endPoint.Address, _endPoint.Port);

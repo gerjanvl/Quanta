@@ -9,7 +9,7 @@ namespace Guacamole.WebSocket.Swagger
 {
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
-        readonly IApiVersionDescriptionProvider _provider;
+        private readonly IApiVersionDescriptionProvider _provider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.

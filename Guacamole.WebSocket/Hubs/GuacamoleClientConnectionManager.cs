@@ -29,6 +29,7 @@ namespace Guacamole.WebSocket.Hubs
         {
             var ipAddress = Dns.GetHostAddresses(_configuration["Guacamole:Server:Hostname"]);
             var port = _configuration.GetValue<int>("Guacamole:Server:Port");
+
             return new IPEndPoint(ipAddress.First(), port);
         }
 

@@ -18,10 +18,8 @@ namespace Guacamole.WebSocket.MappingProfiles
 
             CreateMap<User, Data.Models.User>().ForMember(o => o.UserDevices, p => p.Ignore());
 
-
             CreateMap<Data.Models.Device, Device>();
             CreateMap<Device, Data.Models.Device>();
-
         }
     }
 }

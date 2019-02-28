@@ -26,7 +26,6 @@ namespace Guacamole.WebSocket.Controllers
             _userService = userService;
         }
 
-
         [ODataRoute()]
         [Authorize()]
         public IActionResult Get()
