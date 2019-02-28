@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Guacamole.Data\Guacamole.Data.csproj" />
+    <ProjectReference Include="..\Guacamole.DataAccess\Guacamole.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

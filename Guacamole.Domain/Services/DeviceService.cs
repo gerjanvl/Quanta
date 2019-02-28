@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Guacamole.Data;
-using Guacamole.Data.Models;
+using Guacamole.DataAccess;
+using Guacamole.DataAccess.Models;
 
 namespace Guacamole.Domain.Services
 {
