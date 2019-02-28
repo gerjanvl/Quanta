@@ -135,10 +135,6 @@ namespace Guacamole.WebSocket
                 routeBuilder.MapVersionedODataRoutes("odata-bypath", "api/v{version:apiVersion}", modelBuilder.GetEdmModels());
             });
 
-            app.UseStaticFiles();
-            app.UseDefaultFiles();
-            app.UseSpaStaticFiles();
-
             app.UseSwagger();
             app.UseSwaggerUI(options =>
                 {
