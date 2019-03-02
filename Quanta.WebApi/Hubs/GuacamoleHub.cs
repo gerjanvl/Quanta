@@ -55,6 +55,7 @@ namespace Quanta.WebApi.Hubs
             }
             catch (Exception)
             {
+                _clientConnectionManager.Remove(Context.ConnectionId);
                 Context.Abort();
 
                 throw;
@@ -72,6 +73,7 @@ namespace Quanta.WebApi.Hubs
             }
             catch (Exception)
             {
+                _clientConnectionManager.Remove(Context.ConnectionId);
                 Context.Abort();
 
                 throw;

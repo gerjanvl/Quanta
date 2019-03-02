@@ -95,12 +95,14 @@ namespace Quanta.WebApi.Hubs
             }
             finally
             {
-                _clientManager.Remove(hubConnectionId);
+                Remove(hubConnectionId);
             }
         }
 
         public void Remove(string hubConnectionId)
         {
+            if(string.IsNullOrEmpty(hubConnectionId)) return;
+
             var client = _clientManager.Get(hubConnectionId);
 
             if (client?.ConnectionId != null)
