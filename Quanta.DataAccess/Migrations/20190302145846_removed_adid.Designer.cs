@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quanta.DataAccess;
 
 namespace Quanta.DataAccess.Migrations
 {
     [DbContext(typeof(QuantaContext))]
-    partial class QuantaContextModelSnapshot : ModelSnapshot
+    [Migration("20190302145846_removed_adid")]
+    partial class removed_adid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

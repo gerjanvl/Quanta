@@ -13,8 +13,6 @@ namespace Quanta.DataAccess.Entities
 
         public Guid Id { get; set; }
 
-        public Guid UserIdentity { get; set; }
-
         public ICollection<UserDevice> UserDevices { get; set; }
 
         public ICollection<DeviceAccess> DeviceAccess { get; set; }
