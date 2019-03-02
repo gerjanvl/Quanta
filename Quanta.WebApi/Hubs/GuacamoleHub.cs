@@ -19,10 +19,10 @@ namespace Quanta.WebApi.Hubs
     [Authorize]
     public class GuacamoleHub : Hub
     {
-        private readonly GuacamoleClientConnectionManager _clientConnectionManager;
+        private readonly GuacamoleClientConnectionManager<GuacamoleHub> _clientConnectionManager;
         private readonly IUserService _userService;
 
-        public GuacamoleHub(GuacamoleClientConnectionManager clientConnectionManager, IUserService userService)
+        public GuacamoleHub(GuacamoleClientConnectionManager<GuacamoleHub> clientConnectionManager, IUserService userService)
         {
             _clientConnectionManager = clientConnectionManager;
             _userService = userService;
