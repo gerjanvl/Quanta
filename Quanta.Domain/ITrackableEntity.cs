@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Quanta.DataAccess.Entities
+namespace Quanta.Domain
 {
     public interface ITrackableEntity
     {

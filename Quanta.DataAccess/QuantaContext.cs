@@ -3,8 +3,13 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
-using Quanta.DataAccess.Entities;
+
 using Quanta.DataAccess.EntityConfigurations;
+using Quanta.Domain;
+using Quanta.Domain.Device;
+using Quanta.Domain.Session;
+using Quanta.Domain.User;
+using Quanta.Domain.UserDevice;
 
 namespace Quanta.DataAccess
 {

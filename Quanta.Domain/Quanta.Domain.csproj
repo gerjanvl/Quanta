@@ -9,8 +9,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Quanta.DataAccess\Quanta.DataAccess.csproj" />
-  </ItemGroup>
-
 </Project>

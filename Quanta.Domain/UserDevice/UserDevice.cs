@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quanta.DataAccess.Entities
+namespace Quanta.Domain.UserDevice
 {
     public class UserDevice
     {
@@ -8,10 +8,10 @@ namespace Quanta.DataAccess.Entities
 
         public Guid UserId { get; set; }
 
-        public User User { get; set; }
+        public User.User User { get; set; }
 
         public Guid DeviceId { get; set; }
 
-        public Device Device { get; set; }
+        public Device.Device Device { get; set; }
     }
 }

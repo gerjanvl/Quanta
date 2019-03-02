@@ -15,13 +15,16 @@ using Microsoft.Extensions.Options;
 using Microsoft.OData;
 using Newtonsoft.Json.Serialization;
 using Quanta.DataAccess;
-using Quanta.Domain.Services;
+using Quanta.Domain;
+using Quanta.Domain.Device;
+using Quanta.Domain.Session;
+using Quanta.Domain.User;
 using Quanta.WebApi.Configuration.MappingProfiles;
+using Quanta.WebApi.Configuration.Swagger;
 using Quanta.WebApi.Extensions;
 using Quanta.WebApi.Extensions.Authentication.ActiveDirectory;
 using Quanta.WebApi.Extensions.AutoMapper;
 using Quanta.WebApi.Hubs;
-using Quanta.WebApi.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Quanta.WebApi

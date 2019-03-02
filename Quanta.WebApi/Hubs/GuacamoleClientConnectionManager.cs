@@ -8,7 +8,7 @@ using Guacamole.Client.Common;
 using Guacamole.Client.Extensions;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
-using Quanta.Domain.Services;
+using Quanta.Domain.Session;
 
 namespace Quanta.WebApi.Hubs
 {
@@ -46,13 +46,11 @@ namespace Quanta.WebApi.Hubs
             var guacamoleClient = new GuacamoleClient(_guacamoleServerAddress);
 
             var connectionId = await guacamoleClient.Connect(protocol, width, height, args);
-
             _sessionService.StartNew(connectionId, userId, deviceId);
 
             _clientManager.Add(hubConnectionId, guacamoleClient);
 
             var client = _hubContext.Clients.Client(hubConnectionId);
-
             await client.SendCoreAsync("connected", new object[] { connectionId });
 
 #pragma warning disable 4014
@@ -83,7 +81,6 @@ namespace Quanta.WebApi.Hubs
                     var instruction = await guacamoleClient.ReadInstruction().ThrowTimeoutAfter(TimeSpan.FromMinutes(1));
 
                     var instructionOpCode = instruction.OpCode.ToLower().Trim();
-
                     if (blockedInstructions.Contains(instructionOpCode)) break;
 
                     await client.SendAsync("instruction", instruction);

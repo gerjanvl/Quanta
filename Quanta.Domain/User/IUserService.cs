@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Quanta.Domain.Services
+namespace Quanta.Domain.User
 {
     public interface IUserService
     {

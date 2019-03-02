@@ -7,7 +7,7 @@ using Guacamole.Client.Protocol;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
-using Quanta.Domain.Services;
+using Quanta.Domain.User;
 using Quanta.WebApi.Extensions.OData;
 using Quanta.WebApi.OData;
 using Quanta.WebApi.OData.Models;

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Quanta.WebApi.Swagger
+namespace Quanta.WebApi.Configuration.Swagger
 {
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
@@ -29,9 +29,9 @@ namespace Quanta.WebApi.Swagger
         {
             var info = new Info()
             {
-                Title = "Guacamole API",
+                Title = "Quanta API",
                 Version = description.ApiVersion.ToString(),
-                Description = "Guacamole user/device management",
+                Description = "Quanta user/device management",
                 Contact = new Contact() { Name = "Gerjan Vlot", Email = "gerjanvlot@gmail.com" },
                 //  TermsOfService = new Uri("Shareware"),
                 License = new License() { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-namespace Quanta.DataAccess
+namespace Quanta.Domain
 {
     public interface IRepository<TEntity>
     {

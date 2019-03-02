@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Quanta.DataAccess.Entities
+namespace Quanta.Domain.Device
 {
     public class Device : ITrackableEntity
     {
         public Device()
         {
-            Sessions = new HashSet<Session>();
+            Sessions = new HashSet<Session.Session>();
         }
 
         public Guid Id { get; set; }
@@ -20,7 +20,7 @@ namespace Quanta.DataAccess.Entities
 
         public bool Enabled { get; set; }
 
-        public ICollection<Session> Sessions { get; set; }
+        public ICollection<Session.Session> Sessions { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

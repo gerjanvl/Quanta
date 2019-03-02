@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
-using Quanta.DataAccess.Entities;
+using Quanta.Domain.UserDevice;
 
 namespace Quanta.DataAccess.EntityConfigurations
 {

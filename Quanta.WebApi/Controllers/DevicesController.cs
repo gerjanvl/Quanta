@@ -6,7 +6,7 @@ using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Quanta.Domain.Services;
+using Quanta.Domain.Device;
 using Quanta.WebApi.Configuration;
 using Device = Quanta.WebApi.OData.Models.Device;
 
