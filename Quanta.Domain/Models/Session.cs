@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quanta.Domain.Session
+namespace Quanta.Domain.Models
 {
     public class Session
     {
@@ -8,11 +8,11 @@ namespace Quanta.Domain.Session
 
         public Guid UserId { get; set; }
 
-        public User.User User { get; set; }
+        public User User { get; set; }
 
         public Guid DeviceId { get; set; }
 
-        public Device.Device Device { get; set; }
+        public Device Device { get; set; }
 
         public DateTime? FinishedOn { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Quanta.Domain.Device
+namespace Quanta.Infrastructure.Services
 {
     public interface IDeviceService
     {

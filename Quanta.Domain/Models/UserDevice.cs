@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quanta.Domain.UserDevice
+namespace Quanta.Domain.Models
 {
     public class UserDevice
     {
@@ -8,10 +8,10 @@ namespace Quanta.Domain.UserDevice
 
         public Guid UserId { get; set; }
 
-        public User.User User { get; set; }
+        public User User { get; set; }
 
         public Guid DeviceId { get; set; }
 
-        public Device.Device Device { get; set; }
+        public Device Device { get; set; }
     }
 }

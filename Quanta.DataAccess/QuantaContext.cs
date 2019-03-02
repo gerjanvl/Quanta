@@ -6,10 +6,7 @@ using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 using Quanta.DataAccess.EntityConfigurations;
 using Quanta.Domain;
-using Quanta.Domain.Device;
-using Quanta.Domain.Session;
-using Quanta.Domain.User;
-using Quanta.Domain.UserDevice;
+using Quanta.Domain.Models;
 
 namespace Quanta.DataAccess
 {

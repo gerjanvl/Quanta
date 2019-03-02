@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quanta.Domain.Session
+namespace Quanta.Infrastructure.Services
 {
     public interface ISessionService
     {

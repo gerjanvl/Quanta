@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Guacamole.Client\Guacamole.Client.csproj" />
+    <ProjectReference Include="..\Quanta.Domain\Quanta.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

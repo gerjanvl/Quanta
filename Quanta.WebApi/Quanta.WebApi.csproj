@@ -29,6 +29,7 @@
     <ProjectReference Include="..\Guacamole.Client\Guacamole.Client.csproj" />
     <ProjectReference Include="..\Quanta.DataAccess\Quanta.DataAccess.csproj" />
     <ProjectReference Include="..\Quanta.Domain\Quanta.Domain.csproj" />
+    <ProjectReference Include="..\Quanta.Infrastructure\Quanta.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

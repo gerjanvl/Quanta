@@ -2,8 +2,10 @@
 using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Quanta.Domain;
+using Quanta.Domain.Models;
 
-namespace Quanta.Domain.Device
+namespace Quanta.Infrastructure.Services
 {
     public class DeviceService : IDeviceService
     {

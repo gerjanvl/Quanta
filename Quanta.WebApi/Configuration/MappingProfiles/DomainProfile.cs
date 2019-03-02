@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using Quanta.Domain.Device;
-using Quanta.Domain.User;
+using Quanta.Domain.Models;
 
 namespace Quanta.WebApi.Configuration.MappingProfiles
 {

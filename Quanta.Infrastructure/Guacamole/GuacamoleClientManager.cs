@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
+using Guacamole.Client;
 
-namespace Guacamole.Client
+namespace Quanta.Infrastructure.Guacamole
 {
     public class GuacamoleClientManager
     {

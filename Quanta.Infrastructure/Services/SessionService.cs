@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
+using Quanta.Domain;
+using Quanta.Domain.Models;
 
-namespace Quanta.Domain.Session
+namespace Quanta.Infrastructure.Services
 {
     public class SessionService : ISessionService
     {

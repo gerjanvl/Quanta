@@ -8,7 +8,8 @@ using Guacamole.Client.Common;
 using Guacamole.Client.Extensions;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
-using Quanta.Domain.Session;
+using Quanta.Infrastructure.Guacamole;
+using Quanta.Infrastructure.Services;
 
 namespace Quanta.WebApi.Hubs
 {

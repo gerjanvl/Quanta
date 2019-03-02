@@ -3,20 +3,22 @@ using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Quanta.Domain;
+using Quanta.Domain.Models;
 
-namespace Quanta.Domain.User
+namespace Quanta.Infrastructure.Services
 {
     public class UserService : IUserService
     {
-        private readonly IRepository<UserDevice.UserDevice> _userDeviceRepository;
+        private readonly IRepository<UserDevice> _userDeviceRepository;
         private readonly IRepository<User> _userRepository;
-        private readonly IRepository<Device.Device> _deviceRepository;
+        private readonly IRepository<Device> _deviceRepository;
         private readonly IMapper _mapper;
 
         public UserService(
-            IRepository<UserDevice.UserDevice> userDeviceRepository, 
+            IRepository<UserDevice> userDeviceRepository, 
             IRepository<User> userRepository,
-            IRepository<Device.Device> deviceRepository,
+            IRepository<Device> deviceRepository,
             IMapper mapper
         )
         {
@@ -85,11 +87,11 @@ namespace Quanta.Domain.User
 
         public T AddNewDevice<T>(Guid userId, T device)
         {
-            var deviceDto = _mapper.Map<Device.Device>(device);
+            var deviceDto = _mapper.Map<Device>(device);
 
             _deviceRepository.Add(deviceDto);
             
-            _userDeviceRepository.Add(new UserDevice.UserDevice() { UserId = userId, DeviceId = deviceDto.Id });
+            _userDeviceRepository.Add(new UserDevice() { UserId = userId, DeviceId = deviceDto.Id });
             _userDeviceRepository.SaveChanges();
 
             return _mapper.Map<T>(deviceDto);
@@ -133,7 +135,7 @@ namespace Quanta.Domain.User
 
         public void AddDevice(Guid userId, Guid deviceId)
         {
-            _userDeviceRepository.Add(new UserDevice.UserDevice() { UserId = userId, DeviceId = deviceId });
+            _userDeviceRepository.Add(new UserDevice() { UserId = userId, DeviceId = deviceId });
         }
     }
 }
