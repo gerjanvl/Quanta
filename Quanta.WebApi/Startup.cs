@@ -47,7 +47,7 @@ namespace Quanta.WebApi
             services.AddScoped<ISessionService, SessionService>();
 
             services.AddSingleton<GuacamoleClientManager>();
-            services.AddScoped<GuacamoleClientConnectionManager>();
+            services.AddScoped<GuacamoleClientConnectionManager<GuacamoleHub>>();
 
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 

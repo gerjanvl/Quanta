@@ -4,25 +4,26 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Guacamole.Client;
-using Guacamole.Client.Common;
 using Guacamole.Client.Extensions;
+using Guacamole.Client.Protocol;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
-using Quanta.Infrastructure.Guacamole;
 using Quanta.Infrastructure.Services;
 
-namespace Quanta.WebApi.Hubs
+namespace Quanta.Infrastructure.Guacamole
 {
-    public class GuacamoleClientConnectionManager
+    public class GuacamoleClientConnectionManager<THub> where THub : Hub
     {
-        private readonly IHubContext<GuacamoleHub> _hubContext;
+        private readonly IHubContext<THub> _hubContext;
         private readonly IConfiguration _configuration;
         private readonly GuacamoleClientManager _clientManager;
         private readonly ISessionService _sessionService;
         private readonly IPEndPoint _guacamoleServerAddress;
 
+        private static readonly string[] blockedInstructions = new string[] { "disconnect" , "select", "connect" };
+
         public GuacamoleClientConnectionManager(
-            IHubContext<GuacamoleHub> hubContext, 
+            IHubContext<THub> hubContext, 
             IConfiguration configuration, 
             GuacamoleClientManager clientManager,
             ISessionService sessionService)
@@ -68,11 +69,6 @@ namespace Quanta.WebApi.Hubs
         {
             var guacamoleClient = _clientManager.Get(hubConnectionId);
 
-            var blockedInstructions = new List<string>()
-            {
-                "disconnect" , "select", "connect"
-            };
-
             try
             {
                 var client = _hubContext.Clients.Client(hubConnectionId);
@@ -81,8 +77,7 @@ namespace Quanta.WebApi.Hubs
                 {
                     var instruction = await guacamoleClient.ReadInstruction().ThrowTimeoutAfter(TimeSpan.FromMinutes(1));
 
-                    var instructionOpCode = instruction.OpCode.ToLower().Trim();
-                    if (blockedInstructions.Contains(instructionOpCode)) break;
+                    if (IsBlackListedInstruction(instruction)) break;
 
                     await client.SendAsync("instruction", instruction);
                 }
@@ -95,6 +90,13 @@ namespace Quanta.WebApi.Hubs
             {
                 Remove(hubConnectionId);
             }
+        }
+
+        private bool IsBlackListedInstruction(GuacamoleInstruction instruction)
+        {
+            var instructionOpCode = instruction.OpCode.ToLower().Trim();
+
+            return blockedInstructions.Contains(instructionOpCode);
         }
 
         public void Remove(string hubConnectionId)
