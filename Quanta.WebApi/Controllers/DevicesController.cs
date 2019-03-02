@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Quanta.Domain.Services;
+using Quanta.WebApi.Configuration;
 using Device = Quanta.WebApi.OData.Models.Device;
 
 namespace Quanta.WebApi.Controllers
 {
     [Authorize]
-    [ApiVersion("1.0")]
-    [ODataRoutePrefix("devices")]
+    [ApiVersion(Constants.Api.V1)]
+    [ODataRoutePrefix(Constants.Api.Routes.Devices)]
     public class DevicesController : ODataController
     {
         private readonly IDeviceService _deviceService;
@@ -24,8 +25,8 @@ namespace Quanta.WebApi.Controllers
         }
 
         [ODataRoute]
-        [Produces("application/json")]
-        [Authorize(Roles = "Admin, Manager")]
+        [Produces(Constants.Api.ApplicationJson)]
+        [Authorize(Roles =  Constants.Api.Roles.ManagerAndAdmin)]
         [ProducesResponseType(200, Type = typeof(ODataValue<IEnumerable<Device>>))]
         [EnableQuery(MaxTop = 1000, AllowedQueryOptions = AllowedQueryOptions.All)]
         public IActionResult GetDevices()
@@ -34,10 +35,10 @@ namespace Quanta.WebApi.Controllers
         }
 
         [ODataRoute("{deviceId}")]
-        [Produces("application/json")]
-        [Authorize(Roles = "Admin, Manager")]
+        [Produces(Constants.Api.ApplicationJson)]
         [ProducesResponseType(200, Type = typeof(Device))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = Constants.Api.Roles.ManagerAndAdmin)]
         public IActionResult GetDevice(Guid deviceId)
         {
             var device = _deviceService.GetById<Device>(deviceId);
@@ -49,9 +50,9 @@ namespace Quanta.WebApi.Controllers
 
         [HttpPost]
         [ODataRoute]
-        [Produces("application/json")]
-        [Authorize(Roles = "Admin, Manager")]
+        [Produces(Constants.Api.ApplicationJson)]
         [ProducesResponseType(200, Type = typeof(Device))]
+        [Authorize(Roles = Constants.Api.Roles.ManagerAndAdmin)]
         public IActionResult AddDevice([FromBody] Device device)
         {
             device = _deviceService.Add(device);
@@ -61,9 +62,9 @@ namespace Quanta.WebApi.Controllers
 
         [HttpPut]
         [ODataRoute("{deviceId}")]
-        [Produces("application/json")]
-        [Authorize(Roles = "Admin, Manager")]
+        [Produces(Constants.Api.ApplicationJson)]
         [ProducesResponseType(200, Type = typeof(Device))]
+        [Authorize(Roles = Constants.Api.Roles.ManagerAndAdmin)]
         public IActionResult UpdateDevice([FromODataUri] Guid deviceId, [FromBody] Device device)
         {
             if (!_deviceService.DeviceExists(deviceId))
@@ -78,9 +79,9 @@ namespace Quanta.WebApi.Controllers
 
         [HttpDelete]
         [ODataRoute("{deviceId}")]
-        [Produces("application/json")]
-        [Authorize(Roles = "Admin, Manager")]
+        [Produces(Constants.Api.ApplicationJson)]
         [ProducesResponseType(200, Type = typeof(Device))]
+        [Authorize(Roles = Constants.Api.Roles.ManagerAndAdmin)]
         public IActionResult DeleteDevice([FromODataUri] Guid deviceId)
         {
             if (!_deviceService.DeviceExists(deviceId))

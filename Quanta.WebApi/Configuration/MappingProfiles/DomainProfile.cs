@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Quanta.DataAccess.Entities;
 
-namespace Quanta.WebApi.MappingProfiles
+namespace Quanta.WebApi.Configuration.MappingProfiles
 {
     public class DomainProfile : Profile
     {

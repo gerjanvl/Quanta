@@ -35,8 +35,8 @@ namespace Quanta.WebApi.Hubs
 
         private IPEndPoint GetServerAddress()
         {
-            var ipAddress = Dns.GetHostAddresses(_configuration["Guacamole:Server:Hostname"]);
-            var port = _configuration.GetValue<int>("Guacamole:Server:Port");
+            var ipAddress = Dns.GetHostAddresses(_configuration["Quanta:Server:Hostname"]);
+            var port = _configuration.GetValue<int>("Quanta:Server:Port");
 
             return new IPEndPoint(ipAddress.First(), port);
         }

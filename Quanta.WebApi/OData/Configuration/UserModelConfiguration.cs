@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Quanta.WebApi.OData.Models;
+using Quanta.WebApi.Configuration;
 
 namespace Quanta.WebApi.OData.Configuration
 {
@@ -12,8 +13,8 @@ namespace Quanta.WebApi.OData.Configuration
         {
             var userConfiguration = builder.AddEntityType(typeof(User));
 
-            builder.AddEntitySet("Users", userConfiguration);
-            builder.AddSingleton("Me", userConfiguration);
+            builder.AddEntitySet(Constants.Api.Routes.Users, userConfiguration);
+            builder.AddSingleton(Constants.Api.Routes.Me, userConfiguration);
 
             return userConfiguration;
         }

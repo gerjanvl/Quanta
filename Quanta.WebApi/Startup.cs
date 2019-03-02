@@ -16,11 +16,11 @@ using Microsoft.OData;
 using Newtonsoft.Json.Serialization;
 using Quanta.DataAccess;
 using Quanta.Domain.Services;
+using Quanta.WebApi.Configuration.MappingProfiles;
 using Quanta.WebApi.Extensions;
 using Quanta.WebApi.Extensions.Authentication.ActiveDirectory;
 using Quanta.WebApi.Extensions.AutoMapper;
 using Quanta.WebApi.Hubs;
-using Quanta.WebApi.MappingProfiles;
 using Quanta.WebApi.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
