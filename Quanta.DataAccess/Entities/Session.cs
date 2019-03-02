@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Quanta.DataAccess.Entities
 {
-    public class DeviceAccess
+    public class Session
     {
         public Guid Id { get; set; }
 
@@ -14,6 +16,8 @@ namespace Quanta.DataAccess.Entities
 
         public Device Device { get; set; }
 
-        public DateTime AccessedOn { get; set; }
+        public DateTime? FinishedOn { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

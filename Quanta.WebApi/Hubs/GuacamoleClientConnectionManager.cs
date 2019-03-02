@@ -5,8 +5,10 @@ using System.Net;
 using System.Threading.Tasks;
 using Guacamole.Client;
 using Guacamole.Client.Common;
+using Guacamole.Client.Extensions;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
+using Quanta.Domain.Services;
 
 namespace Quanta.WebApi.Hubs
 {
@@ -15,13 +17,19 @@ namespace Quanta.WebApi.Hubs
         private readonly IHubContext<GuacamoleHub> _hubContext;
         private readonly IConfiguration _configuration;
         private readonly GuacamoleClientManager _clientManager;
+        private readonly ISessionService _sessionService;
         private readonly IPEndPoint _guacamoleServerAddress;
 
-        public GuacamoleClientConnectionManager(IHubContext<GuacamoleHub> hubContext, IConfiguration configuration, GuacamoleClientManager clientManager)
+        public GuacamoleClientConnectionManager(
+            IHubContext<GuacamoleHub> hubContext, 
+            IConfiguration configuration, 
+            GuacamoleClientManager clientManager,
+            ISessionService sessionService)
         {
             _hubContext = hubContext;
             _configuration = configuration;
             _clientManager = clientManager;
+            _sessionService = sessionService;
             _guacamoleServerAddress = GetServerAddress();
         }
 
@@ -33,15 +41,18 @@ namespace Quanta.WebApi.Hubs
             return new IPEndPoint(ipAddress.First(), port);
         }
 
-        public async Task CreateNew(string hubConnectionId, string protocol, int width, int height, Dictionary<string, object> args)
+        public async Task CreateNew(string hubConnectionId, Guid userId, Guid deviceId, string protocol, int width, int height, Dictionary<string, object> args)
         {
             var guacamoleClient = new GuacamoleClient(_guacamoleServerAddress);
 
             var connectionId = await guacamoleClient.Connect(protocol, width, height, args);
 
+            _sessionService.StartNew(connectionId, userId, deviceId);
+
             _clientManager.Add(hubConnectionId, guacamoleClient);
 
             var client = _hubContext.Clients.Client(hubConnectionId);
+
             await client.SendCoreAsync("connected", new object[] { connectionId });
 
 #pragma warning disable 4014
@@ -90,6 +101,13 @@ namespace Quanta.WebApi.Hubs
 
         public void Remove(string hubConnectionId)
         {
+            var client = _clientManager.Get(hubConnectionId);
+
+            if (client?.ConnectionId != null)
+            {
+                _sessionService.Finish(client.ConnectionId);
+            }
+            
             _clientManager.Remove(hubConnectionId);
         }
     }

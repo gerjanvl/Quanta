@@ -14,7 +14,8 @@ namespace Quanta.DataAccess.EntityConfigurations
 
             builder
                 .Property(o => o.Id)
-                .ValueGeneratedOnAdd();
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("(newid())");
 
             builder
                 .HasMany(o => o.UserDevices)
@@ -22,7 +23,7 @@ namespace Quanta.DataAccess.EntityConfigurations
                 .HasForeignKey(o => o.UserId);
 
             builder
-                .HasMany(o => o.DeviceAccess)
+                .HasMany(o => o.Sessions)
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId);
 

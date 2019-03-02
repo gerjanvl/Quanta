@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Guacamole.Client;
+using Guacamole.Client.Protocol;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -32,7 +33,7 @@ namespace Quanta.WebApi.Hubs
             {
                 var userId = Context.User.GetUserAdId();
 
-                if (_userService.UserExists(userId)) Context.Abort();
+                if (!_userService.UserExists(userId)) Context.Abort();
 
                 var deviceConnectionString = _userService.GetUserDeviceConnectionString(userId, connectViewModel.DeviceId);
 
@@ -41,7 +42,9 @@ namespace Quanta.WebApi.Hubs
                     var deviceConfiguration = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(deviceConnectionString);
 
                     await _clientConnectionManager.CreateNew(
-                        Context.ConnectionId,
+                        hubConnectionId: Context.ConnectionId,
+                        deviceId: connectViewModel.DeviceId,
+                        userId: userId,
                         protocol: deviceConfiguration["protocol"],
                         width: connectViewModel.Width,
                         height: connectViewModel.Height,

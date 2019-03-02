@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quanta.DataAccess;
 
 namespace Quanta.DataAccess.Migrations
 {
     [DbContext(typeof(QuantaContext))]
-    partial class QuantaContextModelSnapshot : ModelSnapshot
+    [Migration("20190302153005_added_session")]
+    partial class added_session
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,22 +24,19 @@ namespace Quanta.DataAccess.Migrations
             modelBuilder.Entity("Quanta.DataAccess.Entities.Device", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(newid())");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConnectionString");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(true);
 
                     b.Property<DateTime>("LastModified")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Name");
 
@@ -51,12 +50,10 @@ namespace Quanta.DataAccess.Migrations
             modelBuilder.Entity("Quanta.DataAccess.Entities.Session", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(newid())");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<Guid>("DeviceId");
 
@@ -80,14 +77,13 @@ namespace Quanta.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.UserDevice", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(newid())");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<Guid>("DeviceId");
 

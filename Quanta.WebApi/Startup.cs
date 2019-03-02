@@ -42,6 +42,7 @@ namespace Quanta.WebApi
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDeviceService, DeviceService>();
+            services.AddScoped<ISessionService, SessionService>();
 
             services.AddSingleton<GuacamoleClientManager>();
             services.AddScoped<GuacamoleClientConnectionManager>();

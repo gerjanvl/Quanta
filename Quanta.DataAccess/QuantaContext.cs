@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using Quanta.DataAccess.Entities;
 using Quanta.DataAccess.EntityConfigurations;
@@ -16,16 +19,34 @@ namespace Quanta.DataAccess
         {
             modelBuilder.ApplyConfiguration(new DeviceEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserDeviceEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new DeviceAccessEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new SessionEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserDeviceEntityConfiguration());
         }
 
         public DbSet<Device> Devices { get; set; }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<UserDevice> UserDevices { get; set; }
 
-        public DbSet<DeviceAccess> DeviceAccess { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+
+
+        public override int SaveChanges()
+        {
+           var modifiedEntries = ChangeTracker
+                .Entries()
+                .Where(e => 
+                            e.State == EntityState.Modified && 
+                            e.Entity.GetType().GetInterfaces().Any(o => o == typeof(ITrackableEntity))
+                      );
+
+            foreach (var entry in modifiedEntries)
+            {
+                entry.Property(nameof(ITrackableEntity.LastModified)).CurrentValue = DateTime.Now;
+            }
+
+            return base.SaveChanges();
+        }
     }
 }

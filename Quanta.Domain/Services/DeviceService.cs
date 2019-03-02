@@ -50,6 +50,8 @@ namespace Quanta.Domain.Services
         {
             var deviceDto = _mapper.Map<Device>(device);
 
+            deviceDto.LastModified = DateTime.Now;
+
             _deviceRepository.Update(deviceDto);
             _deviceRepository.SaveChanges();
 

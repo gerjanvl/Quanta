@@ -37,7 +37,7 @@ namespace Quanta.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeviceAccess",
+                name: "Session",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -47,15 +47,15 @@ namespace Quanta.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeviceAccess", x => x.Id);
+                    table.PrimaryKey("PK_Session", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DeviceAccess_Devices_DeviceId",
+                        name: "FK_Session_Devices_DeviceId",
                         column: x => x.DeviceId,
                         principalTable: "Devices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DeviceAccess_User_UserId",
+                        name: "FK_Session_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -88,13 +88,13 @@ namespace Quanta.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceAccess_DeviceId",
-                table: "DeviceAccess",
+                name: "IX_Session_DeviceId",
+                table: "Session",
                 column: "DeviceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceAccess_UserId",
-                table: "DeviceAccess",
+                name: "IX_Session_UserId",
+                table: "Session",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -111,7 +111,7 @@ namespace Quanta.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DeviceAccess");
+                name: "Session");
 
             migrationBuilder.DropTable(
                 name: "UserDevices");

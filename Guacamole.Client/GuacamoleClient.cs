@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Guacamole.Client.Common;
+using Guacamole.Client.Protocol;
 
 namespace Guacamole.Client
 {
@@ -18,6 +20,8 @@ namespace Guacamole.Client
         private CharWriter _charWriter;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
+        public Guid ConnectionId { get; set; }
+
         public bool Connected => _client.Connected;
 
         public GuacamoleClient(IPEndPoint endPoint)
@@ -27,7 +31,7 @@ namespace Guacamole.Client
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
-        public async Task<string> Connect(string protocol, int width, int height, Dictionary<string, object> arguments)
+        public async Task<Guid> Connect(string protocol, int width, int height, Dictionary<string, object> arguments)
         {
             await _client.ConnectAsync(_endPoint.Address, _endPoint.Port);
 
@@ -52,7 +56,11 @@ namespace Guacamole.Client
 
             var readyInstruction = await ReadInstruction();
 
-            return readyInstruction.Args.ToArray()[0];
+            var connectionId = Guid.Parse(readyInstruction.Args.ToArray()[0].Split('$')[1]);
+
+            ConnectionId = connectionId;
+
+            return connectionId;
         }
 
         public Task<GuacamoleInstruction> ReadInstruction()

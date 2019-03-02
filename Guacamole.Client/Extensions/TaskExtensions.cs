@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Guacamole.Client.Common
+namespace Guacamole.Client.Extensions
 {
     public static class TaskExtensions
     {

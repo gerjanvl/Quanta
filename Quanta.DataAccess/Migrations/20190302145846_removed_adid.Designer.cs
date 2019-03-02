@@ -47,7 +47,7 @@ namespace Quanta.DataAccess.Migrations
                     b.ToTable("Devices");
                 });
 
-            modelBuilder.Entity("Quanta.DataAccess.Entities.DeviceAccess", b =>
+            modelBuilder.Entity("Quanta.DataAccess.Entities.Session", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -64,7 +64,7 @@ namespace Quanta.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DeviceAccess");
+                    b.ToTable("Session");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.User", b =>
@@ -95,15 +95,15 @@ namespace Quanta.DataAccess.Migrations
                     b.ToTable("UserDevices");
                 });
 
-            modelBuilder.Entity("Quanta.DataAccess.Entities.DeviceAccess", b =>
+            modelBuilder.Entity("Quanta.DataAccess.Entities.Session", b =>
                 {
                     b.HasOne("Quanta.DataAccess.Entities.Device", "Device")
-                        .WithMany("DeviceAccess")
+                        .WithMany("Session")
                         .HasForeignKey("DeviceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Quanta.DataAccess.Entities.User", "User")
-                        .WithMany("DeviceAccess")
+                        .WithMany("Session")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -8,13 +8,13 @@ namespace Quanta.DataAccess.Entities
         public User()
         {
             UserDevices = new HashSet<UserDevice>();
-            DeviceAccess = new HashSet<DeviceAccess>();
+            Sessions = new HashSet<Session>();
         }
 
         public Guid Id { get; set; }
 
         public ICollection<UserDevice> UserDevices { get; set; }
 
-        public ICollection<DeviceAccess> DeviceAccess { get; set; }
+        public ICollection<Session> Sessions { get; set; }
     }
 }

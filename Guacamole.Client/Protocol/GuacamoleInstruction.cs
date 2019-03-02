@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Guacamole.Client
+namespace Guacamole.Client.Protocol
 {
     public class GuacamoleInstruction
     {

@@ -122,12 +122,12 @@ namespace Quanta.Domain.Services
             var sampleDate = DateTime.Now.AddDays(-7).Date;
 
             return _userRepository.All()
-                .Include(o => o.DeviceAccess)
+                .Include(o => o.Sessions)
                 .Where(o => o.Id == userId)
                 .SelectMany(o => o.UserDevices.Select(d => d.Device))
-                .SelectMany(o => o.DeviceAccess)
-                .Where(o => o.UserId == userId &&  o.AccessedOn >= sampleDate)
-                .OrderByDescending(o => o.AccessedOn)
+                .SelectMany(o => o.Sessions)
+                .Where(o => o.UserId == userId &&  o.CreatedOn >= sampleDate)
+                .OrderByDescending(o => o.CreatedOn)
                 .GroupBy(o => o.Device)
                 .Select(o => o.Key)
                 .ProjectTo<TDevice>();

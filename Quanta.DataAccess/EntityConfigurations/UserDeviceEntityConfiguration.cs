@@ -14,7 +14,8 @@ namespace Quanta.DataAccess.EntityConfigurations
 
             builder
                 .Property(o => o.Id)
-                .ValueGeneratedOnAdd();
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("(newid())");
 
             builder
                 .HasOne(o => o.Device);

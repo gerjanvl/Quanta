@@ -14,22 +14,25 @@ namespace Quanta.DataAccess.EntityConfigurations
 
             builder
                 .Property(o => o.Id)
-                .ValueGeneratedOnAdd();
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("(newid())");
 
             builder
                 .Property(o => o.CreatedOn)
-                .ValueGeneratedOnAdd();
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("(getdate())");
 
             builder
                 .Property(o => o.LastModified)
-                .ValueGeneratedOnAddOrUpdate();
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("(getdate())");
 
             builder
                 .Property(o => o.Enabled)
                 .HasDefaultValue(true);
 
             builder
-                .HasMany(o => o.DeviceAccess)
+                .HasMany(o => o.Sessions)
                 .WithOne(o => o.Device)
                 .HasForeignKey(o => o.DeviceId);
         }

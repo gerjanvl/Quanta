@@ -5,22 +5,28 @@ using Quanta.DataAccess.Entities;
 
 namespace Quanta.DataAccess.EntityConfigurations
 {
-    public class DeviceAccessEntityConfiguration : IEntityTypeConfiguration<DeviceAccess>
+    public class SessionEntityConfiguration : IEntityTypeConfiguration<Session>
     {
-        public void Configure(EntityTypeBuilder<DeviceAccess> builder)
+        public void Configure(EntityTypeBuilder<Session> builder)
         {
             builder
                 .HasKey(o => o.Id);
 
             builder
                 .Property(o => o.Id)
-                .ValueGeneratedOnAdd();
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("(newid())");
 
             builder
                 .HasOne(o => o.Device);
 
             builder
                 .HasOne(o => o.User);
+
+            builder
+                .Property(o => o.CreatedOn)
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("(getdate())"); 
         }
     }
 }
