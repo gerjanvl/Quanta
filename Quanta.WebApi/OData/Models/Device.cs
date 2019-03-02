@@ -1,8 +1,10 @@
-﻿namespace Quanta.WebApi.OData.Models
+﻿using System;
+
+namespace Quanta.WebApi.OData.Models
 {
     public class Device
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

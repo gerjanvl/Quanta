@@ -1,8 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Quanta.DataAccess;
-using Quanta.DataAccess.Models;
+using Quanta.DataAccess.Entities;
 
 namespace Quanta.Domain.Services
 {
@@ -20,12 +21,12 @@ namespace Quanta.Domain.Services
             _mapper = mapper;
         }
 
-        public T GetById<T>(int deviceId)
+        public T GetById<T>(Guid deviceId)
         {
             return _deviceRepository.All().Where(o => o.Id == deviceId).ProjectTo<T>().FirstOrDefault();
         }
 
-        public bool DeviceExists(int deviceId)
+        public bool DeviceExists(Guid deviceId)
         {
             return _deviceRepository.All().Any(o => o.Id == deviceId);
         }
@@ -55,7 +56,7 @@ namespace Quanta.Domain.Services
             return _mapper.Map<T>(deviceDto);
         }
 
-        public void Delete(int deviceId)
+        public void Delete(Guid deviceId)
         {
             var device = _deviceRepository.All().FirstOrDefault(o => o.Id == deviceId);
 

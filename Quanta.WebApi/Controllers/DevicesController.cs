@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNet.OData.Routing;
@@ -37,7 +38,7 @@ namespace Quanta.WebApi.Controllers
         [Authorize(Roles = "Admin, Manager")]
         [ProducesResponseType(200, Type = typeof(Device))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetDevice(int deviceId)
+        public IActionResult GetDevice(Guid deviceId)
         {
             var device = _deviceService.GetById<Device>(deviceId);
 
@@ -63,7 +64,7 @@ namespace Quanta.WebApi.Controllers
         [Produces("application/json")]
         [Authorize(Roles = "Admin, Manager")]
         [ProducesResponseType(200, Type = typeof(Device))]
-        public IActionResult UpdateDevice([FromODataUri] int deviceId, [FromBody] Device device)
+        public IActionResult UpdateDevice([FromODataUri] Guid deviceId, [FromBody] Device device)
         {
             if (!_deviceService.DeviceExists(deviceId))
             {
@@ -80,7 +81,7 @@ namespace Quanta.WebApi.Controllers
         [Produces("application/json")]
         [Authorize(Roles = "Admin, Manager")]
         [ProducesResponseType(200, Type = typeof(Device))]
-        public IActionResult DeleteDevice([FromODataUri] int deviceId)
+        public IActionResult DeleteDevice([FromODataUri] Guid deviceId)
         {
             if (!_deviceService.DeviceExists(deviceId))
             {

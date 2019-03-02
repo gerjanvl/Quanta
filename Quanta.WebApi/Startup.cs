@@ -37,7 +37,7 @@ namespace Quanta.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<GuacamoleContext>(c => c.UseSqlServer(Configuration.GetConnectionString("QuantaDatabase")));
+            services.AddDbContext<QuantaContext>(c => c.UseSqlServer(Configuration.GetConnectionString("QuantaDatabase")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserService, UserService>();

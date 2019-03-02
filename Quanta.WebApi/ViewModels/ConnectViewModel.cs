@@ -1,8 +1,10 @@
-﻿namespace Quanta.WebApi.ViewModels
+﻿using System;
+
+namespace Quanta.WebApi.ViewModels
 {
     public class ConnectViewModel
     {
-        public int DeviceId { get; set; }
+        public Guid DeviceId { get; set; }
 
         public int Width { get; set; }
 

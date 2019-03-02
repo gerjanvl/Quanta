@@ -7,9 +7,9 @@ namespace Quanta.DataAccess
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private readonly DbSet<TEntity> _entitySet;
-        private readonly GuacamoleContext _context;
+        private readonly QuantaContext _context;
 
-        public Repository(GuacamoleContext context)
+        public Repository(QuantaContext context)
         {
             _context = context;
             _entitySet = context.Set<TEntity>();

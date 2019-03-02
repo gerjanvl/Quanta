@@ -19,7 +19,7 @@ namespace Quanta.WebApi.Extensions.OData
             return Guid.Parse(user.Claims.FirstOrDefault(o => o.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier")?.Value);
         }
 
-        public static async Task<KeyValuePair<string, T>> GetODataRefIdAsync<T>(this HttpRequest request) where T : IConvertible
+        public static async Task<KeyValuePair<string, T>> GetODataRefIdAsync<T>(this HttpRequest request)
         {
             using (var sr = new StreamReader(request.Body, Encoding.UTF8))
             {

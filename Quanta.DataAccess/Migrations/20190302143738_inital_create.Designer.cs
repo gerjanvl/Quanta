@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quanta.DataAccess;
 
 namespace Quanta.DataAccess.Migrations
 {
-    [DbContext(typeof(GuacamoleContext))]
-    partial class GuacamoleContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(QuantaContext))]
+    [Migration("20190302143738_inital_create")]
+    partial class inital_create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,17 +21,22 @@ namespace Quanta.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Quanta.DataAccess.Models.Device", b =>
+            modelBuilder.Entity("Quanta.DataAccess.Entities.Device", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConnectionString");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(true);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Name");
 
@@ -40,17 +47,16 @@ namespace Quanta.DataAccess.Migrations
                     b.ToTable("Devices");
                 });
 
-            modelBuilder.Entity("Quanta.DataAccess.Models.DeviceAccess", b =>
+            modelBuilder.Entity("Quanta.DataAccess.Entities.DeviceAccess", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("AccessedOn");
 
-                    b.Property<int>("DeviceId");
+                    b.Property<Guid>("DeviceId");
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -61,11 +67,10 @@ namespace Quanta.DataAccess.Migrations
                     b.ToTable("DeviceAccess");
                 });
 
-            modelBuilder.Entity("Quanta.DataAccess.Models.User", b =>
+            modelBuilder.Entity("Quanta.DataAccess.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<Guid>("UserIdentity");
 
@@ -74,15 +79,14 @@ namespace Quanta.DataAccess.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Quanta.DataAccess.Models.UserDevice", b =>
+            modelBuilder.Entity("Quanta.DataAccess.Entities.UserDevice", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<int>("DeviceId");
+                    b.Property<Guid>("DeviceId");
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -93,27 +97,27 @@ namespace Quanta.DataAccess.Migrations
                     b.ToTable("UserDevices");
                 });
 
-            modelBuilder.Entity("Quanta.DataAccess.Models.DeviceAccess", b =>
+            modelBuilder.Entity("Quanta.DataAccess.Entities.DeviceAccess", b =>
                 {
-                    b.HasOne("Quanta.DataAccess.Models.Device", "Device")
+                    b.HasOne("Quanta.DataAccess.Entities.Device", "Device")
                         .WithMany("DeviceAccess")
                         .HasForeignKey("DeviceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Quanta.DataAccess.Models.User", "User")
+                    b.HasOne("Quanta.DataAccess.Entities.User", "User")
                         .WithMany("DeviceAccess")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Quanta.DataAccess.Models.UserDevice", b =>
+            modelBuilder.Entity("Quanta.DataAccess.Entities.UserDevice", b =>
                 {
-                    b.HasOne("Quanta.DataAccess.Models.Device", "Device")
+                    b.HasOne("Quanta.DataAccess.Entities.Device", "Device")
                         .WithMany()
                         .HasForeignKey("DeviceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Quanta.DataAccess.Models.User", "User")
+                    b.HasOne("Quanta.DataAccess.Entities.User", "User")
                         .WithMany("UserDevices")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

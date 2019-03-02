@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using AutoMapper;
-using Quanta.DataAccess.Models;
+using Quanta.DataAccess.Entities;
 
 namespace Quanta.WebApi.MappingProfiles
 {
@@ -14,11 +14,11 @@ namespace Quanta.WebApi.MappingProfiles
 
         private void CreateUserMappings()
         {
-            CreateMap<DataAccess.Models.User, OData.Models.User>()
+            CreateMap<User, OData.Models.User>()
                 .ForMember(o => o.Devices, o => o.Ignore())
                 .ForMember(o => o.RecentDevices, o => o.Ignore());
 
-            CreateMap<OData.Models.User, DataAccess.Models.User>()
+            CreateMap<OData.Models.User, User>()
                 .ForMember(o => o.UserDevices, p => p.Ignore());
         }
 

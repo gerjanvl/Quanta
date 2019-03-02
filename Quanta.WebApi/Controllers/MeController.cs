@@ -25,7 +25,9 @@ namespace Quanta.WebApi.Controllers
         [Authorize()]
         public IActionResult Get()
         {
-            var user = _userService.GetByAdIdentifier<User>(User.GetUserAdId());
+            var userId = User.GetUserAdId();
+
+            var user = _userService.GetById<User>(userId);
 
             if (user == null) return Unauthorized();
 
@@ -35,11 +37,11 @@ namespace Quanta.WebApi.Controllers
         [ODataRoute("devices")]
         public IActionResult GetDevices()
         {
-            var user = _userService.GetByAdIdentifier<User>(User.GetUserAdId());
+            var userId = User.GetUserAdId();
 
-            if (user == null) return Unauthorized();
+            if (_userService.UserExists(userId)) return Unauthorized();
 
-            var devices = _userService.GetDevices<Device>(user.Id);
+            var devices = _userService.GetDevices<Device>(userId);
 
             return Ok(devices);
         }
@@ -47,11 +49,11 @@ namespace Quanta.WebApi.Controllers
         [ODataRoute("recentDevices")]
         public IActionResult GetRecentDevices()
         {
-            var user = _userService.GetByAdIdentifier<User>(User.GetUserAdId());
+            var userId = User.GetUserAdId();
 
-            if (user == null) return Unauthorized();
+            if (_userService.UserExists(userId)) return Unauthorized();
 
-            var devices = _userService.GetRecentDevices<Device>(user.Id);
+            var devices = _userService.GetRecentDevices<Device>(userId);
 
             return Ok(devices);
         }

@@ -4,7 +4,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Quanta.DataAccess;
-using Quanta.DataAccess.Models;
+using Quanta.DataAccess.Entities;
 
 namespace Quanta.Domain.Services
 {
@@ -28,17 +28,12 @@ namespace Quanta.Domain.Services
             _mapper = mapper;
         }
 
-        public T GetById<T>(int userId)
+        public T GetById<T>(Guid userId)
         {
             return _userRepository.All().Where(o => o.Id == userId).ProjectTo<T>().FirstOrDefault();
         }
 
-        public T GetByAdIdentifier<T>(Guid adIdentifier)
-        {
-            return _userRepository.All().Where(o => o.UserIdentity == adIdentifier).ProjectTo<T>().FirstOrDefault();
-        }
-
-        public bool UserExists(int userId)
+        public bool UserExists(Guid userId)
         {
             return _userRepository.All().Any(o => o.Id == userId);
         }
@@ -48,7 +43,7 @@ namespace Quanta.Domain.Services
             return _userRepository.All().ProjectTo<T>();
         }
 
-        public IQueryable<TDevice> GetDevices<TDevice>(int userId)
+        public IQueryable<TDevice> GetDevices<TDevice>(Guid userId)
         {
             return _userRepository.All()
                 .Include(o => o.UserDevices)
@@ -77,7 +72,7 @@ namespace Quanta.Domain.Services
             return _mapper.Map<T>(userDto);
         }
 
-        public void Delete(int userId)
+        public void Delete(Guid userId)
         {
             var user = _userRepository.All().FirstOrDefault(o => o.Id == userId);
 
@@ -90,7 +85,7 @@ namespace Quanta.Domain.Services
             _userRepository.SaveChanges();
         }
 
-        public T AddNewDevice<T>(int userId, T device)
+        public T AddNewDevice<T>(Guid userId, T device)
         {
             var deviceDto = _mapper.Map<Device>(device);
 
@@ -102,7 +97,7 @@ namespace Quanta.Domain.Services
             return _mapper.Map<T>(deviceDto);
         }
 
-        public void RemoveDevice(int userId, int deviceId)
+        public void RemoveDevice(Guid userId, Guid deviceId)
         {
             var userDevice = _userDeviceRepository
                 .All()
@@ -114,7 +109,7 @@ namespace Quanta.Domain.Services
             _userDeviceRepository.SaveChanges();
         }
 
-        public string GetUserDeviceConnectionString(int userId, int deviceId)
+        public string GetUserDeviceConnectionString(Guid userId, Guid deviceId)
         {
            return _userDeviceRepository.All()
                .Where(o => o.DeviceId == deviceId & o.UserId == userId)
@@ -122,7 +117,7 @@ namespace Quanta.Domain.Services
                .FirstOrDefault();
         }
 
-        public IQueryable<TDevice> GetRecentDevices<TDevice>(int userId)
+        public IQueryable<TDevice> GetRecentDevices<TDevice>(Guid userId)
         {
             var sampleDate = DateTime.Now.AddDays(-7).Date;
 
@@ -138,7 +133,7 @@ namespace Quanta.Domain.Services
                 .ProjectTo<TDevice>();
         }
 
-        public void AddDevice(int userId, int deviceId)
+        public void AddDevice(Guid userId, Guid deviceId)
         {
             _userDeviceRepository.Add(new UserDevice() { UserId = userId, DeviceId = deviceId });
         }

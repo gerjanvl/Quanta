@@ -18,9 +18,9 @@ namespace Quanta.WebApi.Hubs
     public class GuacamoleHub : Hub
     {
         private readonly GuacamoleClientConnectionManager _clientConnectionManager;
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public GuacamoleHub(GuacamoleClientConnectionManager clientConnectionManager, UserService userService)
+        public GuacamoleHub(GuacamoleClientConnectionManager clientConnectionManager, IUserService userService)
         {
             _clientConnectionManager = clientConnectionManager;
             _userService = userService;
@@ -30,11 +30,11 @@ namespace Quanta.WebApi.Hubs
         {
             try
             {
-                var user = _userService.GetByAdIdentifier<User>(Context.User.GetUserAdId());
+                var userId = Context.User.GetUserAdId();
 
-                if (user == null) Context.Abort();
+                if (_userService.UserExists(userId)) Context.Abort();
 
-                var deviceConnectionString = _userService.GetUserDeviceConnectionString(user.Id, connectViewModel.DeviceId);
+                var deviceConnectionString = _userService.GetUserDeviceConnectionString(userId, connectViewModel.DeviceId);
 
                 if (!string.IsNullOrWhiteSpace(deviceConnectionString))
                 {

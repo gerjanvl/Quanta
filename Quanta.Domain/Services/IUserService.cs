@@ -5,30 +5,26 @@ namespace Quanta.Domain.Services
 {
     public interface IUserService
     {
-        T Add<T>(T user);
-
-        void AddDevice(int userId, int deviceId);
-
-        T AddNewDevice<T>(int userId, T device);
-
-        void Delete(int userId);
-
         IQueryable<T> GetAll<T>();
 
-        T GetByAdIdentifier<T>(Guid adIdentifier);
+        T GetById<T>(Guid userId);
 
-        T GetById<T>(int userId);
-
-        IQueryable<TDevice> GetDevices<TDevice>(int userId);
-
-        IQueryable<TDevice> GetRecentDevices<TDevice>(int userId);
-
-        string GetUserDeviceConnectionString(int userId, int deviceId);
-
-        void RemoveDevice(int userId, int deviceId);
+        T Add<T>(T user);
 
         T Update<T>(T user);
 
-        bool UserExists(int userId);
+        void Delete(Guid userId);
+
+        bool UserExists(Guid userId);
+
+        void AddDevice(Guid userId, Guid deviceId);
+
+        void RemoveDevice(Guid userId, Guid deviceId);
+
+        IQueryable<TDevice> GetDevices<TDevice>(Guid userId);
+
+        IQueryable<TDevice> GetRecentDevices<TDevice>(Guid userId);
+
+        string GetUserDeviceConnectionString(Guid userId, Guid deviceId);
     }
 }

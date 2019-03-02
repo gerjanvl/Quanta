@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace Quanta.DataAccess.Models
+namespace Quanta.DataAccess.Entities
 {
     public class Device
     {
@@ -9,7 +10,7 @@ namespace Quanta.DataAccess.Models
             DeviceAccess = new HashSet<DeviceAccess>();
         }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -20,5 +21,9 @@ namespace Quanta.DataAccess.Models
         public bool Enabled { get; set; }
 
         public ICollection<DeviceAccess> DeviceAccess { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime LastModified { get; set; }
     }
 }

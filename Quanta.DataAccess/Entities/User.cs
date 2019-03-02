@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Quanta.DataAccess.Models
+namespace Quanta.DataAccess.Entities
 {
     public class User
     {
@@ -11,7 +11,7 @@ namespace Quanta.DataAccess.Models
             DeviceAccess = new HashSet<DeviceAccess>();
         }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public Guid UserIdentity { get; set; }
 
