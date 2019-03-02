@@ -51,7 +51,7 @@ namespace Quanta.WebApi.Controllers
         {
             var userId = User.GetUserAdId();
 
-            if (_userService.UserExists(userId)) return Unauthorized();
+            if (!_userService.UserExists(userId)) return Unauthorized();
 
             var devices = _userService.GetRecentDevices<Device>(userId);
 

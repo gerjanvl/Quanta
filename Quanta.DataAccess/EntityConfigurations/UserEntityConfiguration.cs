@@ -9,6 +9,8 @@ namespace Quanta.DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable(nameof(User));
+
             builder
                 .HasKey(o => o.Id);
 

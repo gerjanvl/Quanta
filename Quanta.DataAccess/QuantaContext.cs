@@ -18,7 +18,7 @@ namespace Quanta.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new DeviceEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new UserDeviceEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new SessionEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserDeviceEntityConfiguration());
         }
@@ -30,7 +30,6 @@ namespace Quanta.DataAccess
         public DbSet<UserDevice> UserDevices { get; set; }
 
         public DbSet<Session> Sessions { get; set; }
-
 
         public override int SaveChanges()
         {

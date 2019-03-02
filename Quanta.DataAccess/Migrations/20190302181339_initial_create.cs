@@ -3,33 +3,32 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Quanta.DataAccess.Migrations
 {
-    public partial class inital_create : Migration
+    public partial class initial_create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Devices",
+                name: "Device",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
                     Name = table.Column<string>(nullable: true),
                     ConnectionString = table.Column<string>(nullable: true),
                     OperatingSystem = table.Column<string>(nullable: true),
                     Enabled = table.Column<bool>(nullable: false, defaultValue: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    LastModified = table.Column<DateTime>(nullable: false)
+                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
+                    LastModified = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Devices", x => x.Id);
+                    table.PrimaryKey("PK_Device", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserIdentity = table.Column<Guid>(nullable: false)
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())")
                 },
                 constraints: table =>
                 {
@@ -40,18 +39,19 @@ namespace Quanta.DataAccess.Migrations
                 name: "Session",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
                     UserId = table.Column<Guid>(nullable: false),
                     DeviceId = table.Column<Guid>(nullable: false),
-                    AccessedOn = table.Column<DateTime>(nullable: false)
+                    FinishedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Session", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Session_Devices_DeviceId",
+                        name: "FK_Session_Device_DeviceId",
                         column: x => x.DeviceId,
-                        principalTable: "Devices",
+                        principalTable: "Device",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -63,24 +63,24 @@ namespace Quanta.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserDevices",
+                name: "UserDevice",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "(newid())"),
                     UserId = table.Column<Guid>(nullable: false),
                     DeviceId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserDevices", x => x.Id);
+                    table.PrimaryKey("PK_UserDevice", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserDevices_Devices_DeviceId",
+                        name: "FK_UserDevice_Device_DeviceId",
                         column: x => x.DeviceId,
-                        principalTable: "Devices",
+                        principalTable: "Device",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserDevices_User_UserId",
+                        name: "FK_UserDevice_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -98,13 +98,13 @@ namespace Quanta.DataAccess.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserDevices_DeviceId",
-                table: "UserDevices",
+                name: "IX_UserDevice_DeviceId",
+                table: "UserDevice",
                 column: "DeviceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserDevices_UserId",
-                table: "UserDevices",
+                name: "IX_UserDevice_UserId",
+                table: "UserDevice",
                 column: "UserId");
         }
 
@@ -114,10 +114,10 @@ namespace Quanta.DataAccess.Migrations
                 name: "Session");
 
             migrationBuilder.DropTable(
-                name: "UserDevices");
+                name: "UserDevice");
 
             migrationBuilder.DropTable(
-                name: "Devices");
+                name: "Device");
 
             migrationBuilder.DropTable(
                 name: "User");

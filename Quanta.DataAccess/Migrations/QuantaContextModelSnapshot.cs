@@ -45,7 +45,7 @@ namespace Quanta.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Devices");
+                    b.ToTable("Device");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.Session", b =>
@@ -70,17 +70,18 @@ namespace Quanta.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Sessions");
+                    b.ToTable("Session");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("(newid())");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.UserDevice", b =>
@@ -99,7 +100,7 @@ namespace Quanta.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserDevices");
+                    b.ToTable("UserDevice");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.Session", b =>

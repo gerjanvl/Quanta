@@ -10,8 +10,8 @@ using Quanta.DataAccess;
 namespace Quanta.DataAccess.Migrations
 {
     [DbContext(typeof(QuantaContext))]
-    [Migration("20190302153245_user_plural")]
-    partial class user_plural
+    [Migration("20190302181339_initial_create")]
+    partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,19 +24,22 @@ namespace Quanta.DataAccess.Migrations
             modelBuilder.Entity("Quanta.DataAccess.Entities.Device", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("ConnectionString");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("(getdate())");
 
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(true);
 
                     b.Property<DateTime>("LastModified")
-                        .ValueGeneratedOnAddOrUpdate();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("(getdate())");
 
                     b.Property<string>("Name");
 
@@ -44,16 +47,18 @@ namespace Quanta.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Devices");
+                    b.ToTable("Device");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.Session", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("(newid())");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("(getdate())");
 
                     b.Property<Guid>("DeviceId");
 
@@ -67,23 +72,25 @@ namespace Quanta.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Sessions");
+                    b.ToTable("Session");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("(newid())");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.UserDevice", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("(newid())");
 
                     b.Property<Guid>("DeviceId");
 
@@ -95,7 +102,7 @@ namespace Quanta.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserDevices");
+                    b.ToTable("UserDevice");
                 });
 
             modelBuilder.Entity("Quanta.DataAccess.Entities.Session", b =>
