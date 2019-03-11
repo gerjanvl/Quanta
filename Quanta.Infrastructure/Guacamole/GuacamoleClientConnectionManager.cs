@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Guacamole.Client;
 using Guacamole.Client.Extensions;
@@ -20,7 +21,7 @@ namespace Quanta.Infrastructure.Guacamole
         private readonly ISessionService _sessionService;
         private readonly IPEndPoint _guacamoleServerAddress;
 
-        private static readonly string[] blockedInstructions = new string[] { "disconnect" , "select", "connect" };
+        private static readonly string[] _blackListedInstructions = { "disconnect" , "select", "connect" };
 
         public GuacamoleClientConnectionManager(
             IHubContext<THub> hubContext, 
@@ -94,9 +95,11 @@ namespace Quanta.Infrastructure.Guacamole
 
         private bool IsBlackListedInstruction(GuacamoleInstruction instruction)
         {
-            var instructionOpCode = instruction.OpCode.ToLower().Trim();
+            var instructionOpCode = instruction.OpCode.ToLower();
+            
+            var isTextRegex = new Regex(@"^[a-zA-Z]*$");
 
-            return blockedInstructions.Contains(instructionOpCode);
+            return !isTextRegex.IsMatch(instructionOpCode) ||_blackListedInstructions.Contains(instructionOpCode);
         }
 
         public void Remove(string hubConnectionId)

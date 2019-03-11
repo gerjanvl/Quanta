@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Quanta.Infrastructure.Services;
 using Quanta.WebApi.Configuration;
-using Device = Quanta.WebApi.OData.Models.Device;
+using Quanta.WebApi.OData.Models;
 
 namespace Quanta.WebApi.Controllers
 {
@@ -50,6 +50,7 @@ namespace Quanta.WebApi.Controllers
 
         [HttpPost]
         [ODataRoute]
+        [Consumes(Constants.Api.ApplicationJson)]
         [Produces(Constants.Api.ApplicationJson)]
         [ProducesResponseType(200, Type = typeof(Device))]
         [Authorize(Roles = Constants.Api.Roles.ManagerAndAdmin)]
@@ -62,6 +63,7 @@ namespace Quanta.WebApi.Controllers
 
         [HttpPut]
         [ODataRoute("{deviceId}")]
+        [Consumes(Constants.Api.ApplicationJson)]
         [Produces(Constants.Api.ApplicationJson)]
         [ProducesResponseType(200, Type = typeof(Device))]
         [Authorize(Roles = Constants.Api.Roles.ManagerAndAdmin)]

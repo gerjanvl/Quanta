@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Guacamole.Client;
 using Microsoft.AspNet.OData.Builder;
@@ -24,6 +25,8 @@ using Quanta.WebApi.Extensions;
 using Quanta.WebApi.Extensions.Authentication.ActiveDirectory;
 using Quanta.WebApi.Extensions.AutoMapper;
 using Quanta.WebApi.Hubs;
+using Quanta.WebApi.OData.Models;
+using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Quanta.WebApi

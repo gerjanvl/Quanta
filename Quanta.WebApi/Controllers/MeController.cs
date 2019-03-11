@@ -27,14 +27,14 @@ namespace Quanta.WebApi.Controllers
         [ODataRoute("devices")]
         [Produces(Constants.Api.ApplicationJson)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(200, Type = typeof(ODataValue<IEnumerable<Device>>))]
+        [ProducesResponseType(200, Type = typeof(ODataValue<IEnumerable<UserDevice>>))]
         public IActionResult GetDevices()
         {
             var userId = User.GetUserAdId();
 
             if (!_userService.UserExists(userId)) return NotFound();
 
-            var devices = _userService.GetDevices<Device>(userId);
+            var devices = _userService.GetDevices<UserDevice>(userId);
 
             return Ok(devices);
         }
@@ -42,14 +42,14 @@ namespace Quanta.WebApi.Controllers
         [ODataRoute("recentDevices")]
         [Produces(Constants.Api.ApplicationJson)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(200, Type = typeof(ODataValue<IEnumerable<Device>>))]
+        [ProducesResponseType(200, Type = typeof(ODataValue<IEnumerable<UserDevice>>))]
         public IActionResult GetRecentDevices()
         {
             var userId = User.GetUserAdId();
 
-            if (!_userService.UserExists(userId)) return Unauthorized();
+            if (!_userService.UserExists(userId)) return NotFound();
 
-            var devices = _userService.GetRecentDevices<Device>(userId);
+            var devices = _userService.GetRecentDevices<UserDevice>(userId);
 
             return Ok(devices);
         }

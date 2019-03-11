@@ -11,10 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Quanta.Infrastructure.Services;
 using Quanta.WebApi.Configuration;
 using Quanta.WebApi.Extensions.OData;
-using Quanta.WebApi.OData;
+using Quanta.WebApi.OData.Models;
 using Quanta.WebApi.OData.Configuration;
-using Device = Quanta.WebApi.OData.Models.Device;
-using User = Quanta.WebApi.OData.Models.User;
 
 namespace Quanta.WebApi.Controllers
 {
@@ -33,7 +31,7 @@ namespace Quanta.WebApi.Controllers
         [ODataRoute("{userId}/devices")]
         [Produces(Constants.Api.ApplicationJson)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(200, Type = typeof(ODataValue<IEnumerable<Device>>))]
+        [ProducesResponseType(200, Type = typeof(ODataValue<IEnumerable<UserDevice>>))]
         public IActionResult GetDevices(Guid userId)
         {
             if (!_userService.UserExists(userId))
@@ -51,12 +49,14 @@ namespace Quanta.WebApi.Controllers
                     return Unauthorized();
             }
 
-            var userDevices = _userService.GetDevices<Device>(userId);
+            var userDevices = _userService.GetDevices<UserDevice>(userId);
 
             return Ok(userDevices);
         }
 
+        [HttpPost]
         [ODataRoute("{userId}/devices/$ref")]
+        [Consumes(Constants.Api.ApplicationJson)]
         [Authorize(Roles = Constants.Api.ApplicationJson)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> CreateRef([FromODataUri] Guid userId)
@@ -75,6 +75,7 @@ namespace Quanta.WebApi.Controllers
             return NoContent();
         }
 
+        [HttpDelete]
         [Authorize(Roles = Constants.Api.ApplicationJson)]
         [ODataRoute("{userId}/devices/{deviceId}/$ref")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

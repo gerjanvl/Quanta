@@ -11,9 +11,9 @@ namespace Quanta.WebApi.OData.Models
         public Guid UserIdentity { get; set; }
 
         [NotExpandable]
-        public List<Device> Devices { get; set; }
+        public List<UserDevice> Devices { get; set; }
 
         [NotExpandable]
-        public List<Device> RecentDevices { get; set; }
+        public List<UserDevice> RecentDevices { get; set; }
     }
 }

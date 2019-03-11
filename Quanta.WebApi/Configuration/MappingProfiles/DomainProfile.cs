@@ -9,6 +9,7 @@ namespace Quanta.WebApi.Configuration.MappingProfiles
         {
             CreateUserMappings();
             CreateDeviceMappings();
+            CreateUserDeviceMappings();
         }
 
         private void CreateUserMappings()
@@ -26,6 +27,11 @@ namespace Quanta.WebApi.Configuration.MappingProfiles
             CreateMap<Device, OData.Models.Device>();
 
             CreateMap<OData.Models.Device, Device>();
+        }
+
+        private void CreateUserDeviceMappings()
+        {
+            CreateMap<Device, OData.Models.UserDevice>();
         }
     }
 }

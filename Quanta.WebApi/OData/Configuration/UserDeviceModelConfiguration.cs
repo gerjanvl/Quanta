@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Quanta.WebApi.OData.Models;
 using Quanta.WebApi.Configuration;
+using Quanta.WebApi.OData.Models;
 
 namespace Quanta.WebApi.OData.Configuration
 {
-    public class UserModelConfiguration : IModelConfiguration
+    public class UserDeviceModelConfiguration : IModelConfiguration
     {
         private static readonly ApiVersion V1 = new ApiVersion(1, 0);
 
         private EntityTypeConfiguration ConfigureCurrent(ODataModelBuilder builder)
         {
-            var userConfiguration = builder.AddEntityType(typeof(User));
+            var deviceConfiguration = builder.AddEntityType(typeof(UserDevice));
 
-            builder.AddEntitySet(Constants.Api.Routes.Users, userConfiguration);     
-            builder.AddSingleton(Constants.Api.Routes.Me, userConfiguration);
+           // builder.AddEntitySet(Constants.Api.Routes.Devices, deviceConfiguration);
 
-            return userConfiguration;
+            return deviceConfiguration;
         }
 
         public void Apply(ODataModelBuilder builder, ApiVersion apiVersion)
