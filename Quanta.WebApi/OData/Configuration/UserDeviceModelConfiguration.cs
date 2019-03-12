@@ -13,8 +13,6 @@ namespace Quanta.WebApi.OData.Configuration
         {
             var deviceConfiguration = builder.AddEntityType(typeof(UserDevice));
 
-           // builder.AddEntitySet(Constants.Api.Routes.Devices, deviceConfiguration);
-
             return deviceConfiguration;
         }
 
