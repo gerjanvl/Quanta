@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quanta.DataAccess", "Quanta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quanta.Domain", "Quanta.Domain\Quanta.Domain.csproj", "{5DC2F3BB-5AE9-4A45-A2DD-278322875D77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quanta.Infrastructure", "Quanta.Infrastructure\Quanta.Infrastructure.csproj", "{D843BE9F-C473-4CB9-ABA3-64A81A68FE80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quanta.Infrastructure", "Quanta.Infrastructure\Quanta.Infrastructure.csproj", "{D843BE9F-C473-4CB9-ABA3-64A81A68FE80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quanta.SignalR", "Quanta.SignalR\Quanta.SignalR.csproj", "{FE78984C-44EA-4689-BBB1-155E5410D886}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quanta.Extensions", "Quanta.Extensions\Quanta.Extensions.csproj", "{9F1EEC4B-0924-477A-B1A7-EFE3B6B6D7BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{D843BE9F-C473-4CB9-ABA3-64A81A68FE80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D843BE9F-C473-4CB9-ABA3-64A81A68FE80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D843BE9F-C473-4CB9-ABA3-64A81A68FE80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE78984C-44EA-4689-BBB1-155E5410D886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE78984C-44EA-4689-BBB1-155E5410D886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE78984C-44EA-4689-BBB1-155E5410D886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE78984C-44EA-4689-BBB1-155E5410D886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F1EEC4B-0924-477A-B1A7-EFE3B6B6D7BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F1EEC4B-0924-477A-B1A7-EFE3B6B6D7BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F1EEC4B-0924-477A-B1A7-EFE3B6B6D7BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F1EEC4B-0924-477A-B1A7-EFE3B6B6D7BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

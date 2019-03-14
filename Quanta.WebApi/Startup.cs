@@ -17,14 +17,12 @@ using Microsoft.OData;
 using Newtonsoft.Json.Serialization;
 using Quanta.DataAccess;
 using Quanta.Domain;
+using Quanta.Extensions.Authentication.ActiveDirectory;
+using Quanta.Extensions.AutoMapper;
 using Quanta.Infrastructure.Guacamole;
 using Quanta.Infrastructure.Services;
 using Quanta.WebApi.Configuration.MappingProfiles;
 using Quanta.WebApi.Configuration.Swagger;
-using Quanta.WebApi.Extensions;
-using Quanta.WebApi.Extensions.Authentication.ActiveDirectory;
-using Quanta.WebApi.Extensions.AutoMapper;
-using Quanta.WebApi.Hubs;
 using Quanta.WebApi.OData.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -33,12 +31,12 @@ namespace Quanta.WebApi
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -49,27 +47,13 @@ namespace Quanta.WebApi
             services.AddScoped<IDeviceService, DeviceService>();
             services.AddScoped<ISessionService, SessionService>();
 
-            services.AddSingleton<GuacamoleClientManager>();
-            services.AddScoped<GuacamoleClientConnectionManager<GuacamoleHub>>();
-
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             services.AddAutoMapperStatic(o => o.AddProfile<DomainProfile>());
 
-            services.AddCors(c => c.AddPolicy("DefaultPolicy", builder =>
-            {
-                builder.WithOrigins("https://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
-            }));
+            services.AddCors();
 
             services.AddActiveDirectoryAuthentication(Configuration.GetSection("AzureAd").Get<ActiveDirectoryAuthenticationOptions>());
-
-            services.AddSignalR().AddJsonProtocol(options =>
-            {
-                options.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
 
             services.AddODataApiExplorer(options => options.AssumeDefaultVersionWhenUnspecified = true);
             services.AddApiVersioning(options => options.ReportApiVersions = true);
@@ -89,11 +73,9 @@ namespace Quanta.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("DefaultPolicy");
-
             app.UseAuthentication();
 
-            app.UseSignalR(option => { option.MapHub<GuacamoleHub>("/ws"); });
+            app.UseCors(o => o.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
 
             app.UseMvc(routeBuilder =>
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -9,7 +10,9 @@ using Guacamole.Client.Extensions;
 using Guacamole.Client.Protocol;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Quanta.Infrastructure.Services;
+#pragma warning disable 4014
 
 namespace Quanta.Infrastructure.Guacamole
 {
@@ -17,8 +20,9 @@ namespace Quanta.Infrastructure.Guacamole
     {
         private readonly IHubContext<THub> _hubContext;
         private readonly IConfiguration _configuration;
+        private readonly IServiceProvider _serviceProvider;
+
         private readonly GuacamoleClientManager _clientManager;
-        private readonly ISessionService _sessionService;
         private readonly IPEndPoint _guacamoleServerAddress;
 
         private static readonly string[] _blackListedInstructions = { "disconnect" , "select", "connect" };
@@ -27,12 +31,12 @@ namespace Quanta.Infrastructure.Guacamole
             IHubContext<THub> hubContext, 
             IConfiguration configuration, 
             GuacamoleClientManager clientManager,
-            ISessionService sessionService)
+            IServiceProvider serviceProvider)
         {
             _hubContext = hubContext;
             _configuration = configuration;
             _clientManager = clientManager;
-            _sessionService = sessionService;
+            _serviceProvider = serviceProvider;
             _guacamoleServerAddress = GetServerAddress();
         }
 
@@ -46,19 +50,21 @@ namespace Quanta.Infrastructure.Guacamole
 
         public async Task CreateNew(string hubConnectionId, Guid userId, Guid deviceId, string protocol, int width, int height, Dictionary<string, object> args)
         {
-            var guacamoleClient = new GuacamoleClient(_guacamoleServerAddress);
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var sessionService = (ISessionService)scope.ServiceProvider.GetService(typeof(ISessionService));
+                var guacamoleClient = new GuacamoleClient(_guacamoleServerAddress);
 
-            var connectionId = await guacamoleClient.Connect(protocol, width, height, args);
-            _sessionService.StartNew(connectionId, userId, deviceId);
+                var connectionId = await guacamoleClient.Connect(protocol, width, height, args);
+                sessionService.StartNew(connectionId, userId, deviceId);
 
-            _clientManager.Add(hubConnectionId, guacamoleClient);
+                _clientManager.Add(hubConnectionId, guacamoleClient);
 
-            var client = _hubContext.Clients.Client(hubConnectionId);
-            await client.SendCoreAsync("connected", new object[] { connectionId });
+                var client = _hubContext.Clients.Client(hubConnectionId);
+                await client.SendCoreAsync("connected", new object[] {connectionId});
+            }
 
-#pragma warning disable 4014
             ReadInstructions(hubConnectionId);
-#pragma warning restore 4014
         }
 
         public GuacamoleClient GetClient(string hubConnectionId)
@@ -76,7 +82,8 @@ namespace Quanta.Infrastructure.Guacamole
 
                 while (guacamoleClient.Connected)
                 {
-                    var instruction = await guacamoleClient.ReadInstruction().ThrowTimeoutAfter(TimeSpan.FromMinutes(1));
+                    var instruction = await guacamoleClient.ReadInstruction()
+                        .ThrowTimeoutAfter(TimeSpan.FromMinutes(1));
 
                     if (IsBlackListedInstruction(instruction)) break;
 
@@ -110,7 +117,11 @@ namespace Quanta.Infrastructure.Guacamole
 
             if (client?.ConnectionId != null)
             {
-                _sessionService.Finish(client.ConnectionId);
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var sessionService = (ISessionService)scope.ServiceProvider.GetService(typeof(ISessionService));
+                    sessionService.Finish(client.ConnectionId);
+                }
             }
             
             _clientManager.Remove(hubConnectionId);
