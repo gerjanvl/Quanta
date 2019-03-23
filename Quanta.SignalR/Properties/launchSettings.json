@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/Quanta.SignalR",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:60724",
       "sslPort": 44343

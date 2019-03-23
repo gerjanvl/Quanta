@@ -46,7 +46,9 @@ namespace Quanta.SignalR
                 c.AddPolicy(DefaultPolicy, builder =>
                 {
                     builder.WithOrigins("https://localhost:4200")
-                        .AllowAnyMethod();
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
                 })
             );
 
