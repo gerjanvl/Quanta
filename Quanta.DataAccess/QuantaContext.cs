@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
-
 using Quanta.DataAccess.EntityConfigurations;
 using Quanta.Domain;
 using Quanta.Domain.Models;
