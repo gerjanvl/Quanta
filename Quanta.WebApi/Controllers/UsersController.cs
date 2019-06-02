@@ -57,7 +57,7 @@ namespace Quanta.WebApi.Controllers
         [HttpPost]
         [ODataRoute("{userId}/devices/$ref")]
         [Consumes(Constants.Api.ApplicationJson)]
-        [Authorize(Roles = Constants.Api.ApplicationJson)]
+        [Authorize(Roles = Constants.Api.Roles.ManagerAndAdmin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> CreateRef([FromODataUri] Guid userId)
         {
@@ -76,7 +76,7 @@ namespace Quanta.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = Constants.Api.ApplicationJson)]
+        [Authorize(Roles = Constants.Api.Roles.ManagerAndAdmin)]
         [ODataRoute("{userId}/devices/{deviceId}/$ref")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult DeleteRef([FromODataUri] Guid userId, Guid deviceId)

@@ -45,7 +45,7 @@ namespace Quanta.SignalR
             services.AddCors(c =>
                 c.AddPolicy(DefaultPolicy, builder =>
                 {
-                    builder.WithOrigins("https://localhost:4200")
+                    builder.WithOrigins("https://localhost:4200", "http://localhost:4200")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials();

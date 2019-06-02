@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Guacamole.Client;
+using Microsoft.AspNet.OData.Batch;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -77,11 +78,13 @@ namespace Quanta.WebApi
 
             app.UseCors(o => o.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
 
+            app.UseODataBatching();
+
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.SetUrlKeyDelimiter(ODataUrlKeyDelimiter.Slash);
                 routeBuilder.Count().Filter().OrderBy().Expand().Select().MaxTop(100);
-                routeBuilder.MapVersionedODataRoutes("odata-bypath", "api/v{version:apiVersion}", modelBuilder.GetEdmModels());
+                routeBuilder.MapVersionedODataRoutes("odata-bypath", "api/v{version:apiVersion}", modelBuilder.GetEdmModels(), newBatchHandler: () => new DefaultODataBatchHandler());
             });
 
             app.UseResponseCompression();
